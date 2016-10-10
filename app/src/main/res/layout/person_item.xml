@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="#ffffff"
+    android:elevation="1dp"
+    android:layout_marginBottom="4dp">
+
+    <TextView
+        android:id="@+id/leaves"
+        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="5"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="40sp"/>
+
+    <LinearLayout
+        android:id="@+id/person_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dummy Guy"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="16sp"/>
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/occupation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dummy Job"
+            android:textColor="@color/colorTextSecondary"/>
+        <TextView
+            android:textSize="14sp"
+            android:id="@+id/dayOfTheMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextPrimary"
+            android:text="5th of every month" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_toRightOf="@id/person_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Leave"
+        android:background="@android:color/transparent"/>
+
+
+</RelativeLayout>
