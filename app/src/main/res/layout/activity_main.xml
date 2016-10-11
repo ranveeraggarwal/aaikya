@@ -11,6 +11,14 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/person_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+    </android.support.v7.widget.RecyclerView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_person_fab"
         android:layout_gravity="bottom|end"
@@ -20,13 +28,5 @@
         android:layout_margin="@dimen/fab_margin"
         app:elevation="@dimen/fab_elevation"
         app:rippleColor="@color/colorAccentLight"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/person_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
-
-    </android.support.v7.widget.RecyclerView>
 
 </android.support.design.widget.CoordinatorLayout>
