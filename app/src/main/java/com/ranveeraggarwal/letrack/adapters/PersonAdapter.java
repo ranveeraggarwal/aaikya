@@ -2,9 +2,11 @@ package com.ranveeraggarwal.letrack.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.models.Person;
@@ -23,9 +25,12 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
 
     List<Person> data = Collections.emptyList();
 
+    Context context;
+
     public PersonAdapter (Context context, List<Person> data) {
         personInflater = LayoutInflater.from(context);
         this.data = data;
+        this.context = context;
     }
 
     @Override
@@ -36,13 +41,36 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder holder, int position) {
+    public void onBindViewHolder(final PersonViewHolder holder, int position) {
         Person currentPerson = data.get(position);
         holder.setName(currentPerson.getName());
         holder.setOccupation(currentPerson.getOccupation());
-        holder.setDayOfTheMonth(currentPerson.getDayOfTheMonth());
+        holder.setFrequency(currentPerson.getFrequency());
         holder.setLeaves(currentPerson.getLeaves());
-
+        holder.addLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentLeaves = Integer.valueOf(holder.getLeaves().getText().toString());
+                holder.setLeaves(currentLeaves + 1);
+                Toast.makeText(context, "Leave Added", Toast.LENGTH_SHORT).show();
+                Log.d("Hello", "Leave Added");
+            }
+        });
+        holder.cancelLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentLeaves = Integer.valueOf(holder.getLeaves().getText().toString());
+                if (currentLeaves != 0) holder.setLeaves(currentLeaves - 1);
+                Toast.makeText(context, "Leave Removed", Toast.LENGTH_SHORT).show();
+                Log.d("Hello", "Leave Removed");
+            }
+        });
+        holder.root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("hello", "it's me");
+            }
+        });
     }
 
     @Override

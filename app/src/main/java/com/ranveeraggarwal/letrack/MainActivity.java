@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
     public static List<Person> getData() {
         List<Person> data = new ArrayList<>();
 
-        String[] names = {"Amar Kumar", "Anthony Gonzalves", "Akbar Mohammed", "Gurpreet Kaur"};
-        String[] occupations = {"Cook", "Sweeper", "Dog Walker", "Gardener"};
-        int[] daysOfTheMonth = {2, 5, 3, 6};
-        int[] leaves = {1, 4, 0 , 0};
-        for (int i=0; i<names.length && i<occupations.length && i<daysOfTheMonth.length && i<leaves.length; i++) {
-            Person person = new Person(names[i], daysOfTheMonth[i], occupations[i], leaves[i]);
+        String[] names = {"Amar Kumar", "Anthony Gonzalves", "Akbar Mohammed", "Gurpreet Kaur", "Dheerendra Dutta"};
+        String[] occupations = {"Cook", "Sweeper", "Dog Walker", "Gardener", "Bachcha"};
+        int[] frequencies = {2, 1, 3, 2, 1};
+        int[] leaves = {1, 4, 0, 0, 10};
+        for (int i=0; i<names.length && i<occupations.length && i<frequencies.length && i<leaves.length; i++) {
+            Person person = new Person(names[i], frequencies[i], occupations[i], leaves[i]);
             data.add(person);
         }
 

@@ -6,20 +6,20 @@ package com.ranveeraggarwal.letrack.models;
 
 public class Person {
     private String name;
-    private int dayOfTheMonth;
+    private int frequency;
     private int leaves;
     private String occupation;
 
     public Person () {}
-    public Person (String name, int dayOfTheMonth, String occupation) {
+    public Person (String name, int frequency, String occupation) {
         this.setName(name);
-        this.setDayOfTheMonth(dayOfTheMonth);
+        this.setFrequency(frequency);
         this.setOccupation(occupation);
         this.setLeaves(0);
     }
-    public Person (String name, int dayOfTheMonth, String occupation, int leaves) {
+    public Person (String name, int frequency, String occupation, int leaves) {
         this.setName(name);
-        this.setDayOfTheMonth(dayOfTheMonth);
+        this.setFrequency(frequency);
         this.setOccupation(occupation);
         this.setLeaves(leaves);
     }
@@ -32,12 +32,12 @@ public class Person {
         this.name = name;
     }
 
-    public int getDayOfTheMonth() {
-        return dayOfTheMonth;
+    public int getFrequency() {
+        return frequency;
     }
 
-    public void setDayOfTheMonth(int dayOfTheMonth) {
-        this.dayOfTheMonth = dayOfTheMonth;
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
     }
 
     public int getLeaves() {
