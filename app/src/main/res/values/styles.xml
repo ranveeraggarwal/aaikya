@@ -10,4 +10,11 @@
         <item name="android:textColorSecondary">@color/colorTextSecondary</item>
     </style>
 
+    <style name="card_style">
+        <item name="android:background">#ffffff</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
 </resources>

@@ -5,7 +5,7 @@
     android:background="#ffffff"
     android:layout_marginBottom="@dimen/person_item_margin"
     android:clickable="true"
-    android:elevation="@dimen/person_item_elevation">
+    android:elevation="1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:background="?attr/selectableItemBackground"
         android:focusable="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/information_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
                 android:id="@+id/leaves"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/avatar_horizontal_margin"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/person_item_dummy_avatar"
                 android:textAlignment="center"
@@ -32,11 +32,10 @@
                 android:textSize="@dimen/person_item_avatar_text_size" />
 
             <LinearLayout
+                android:layout_weight="5"
                 android:id="@+id/person_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/list_horizontal_margin_right"
-                android:layout_marginStart="@dimen/list_horizontal_margin_left"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -47,26 +46,34 @@
                     android:text="@string/dummy_name"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/heading_text_size" />
-
-                <TextView
-                    android:id="@+id/occupation"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dummy_occupation"
-                    android:textColor="@color/colorTextSecondary"
-                    android:textSize="@dimen/subheading_text_size" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/occupation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/dummy_occupation"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="@dimen/subheading_text_size" />
 
-                <TextView
-                    android:id="@+id/frequency"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dummy_frequency"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="@dimen/subheading_text_size" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text=" - "/>
+
+                    <TextView
+                        android:id="@+id/frequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/dummy_frequency"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="@dimen/subheading_text_size" />
+                </LinearLayout>
 
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:id="@+id/person_divider"
@@ -77,30 +84,31 @@
             android:layout_marginStart="@dimen/divider_horizontal_margin"
             android:background="@color/colorDivider" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/person_divider"
-            android:layout_marginStart="@dimen/person_list_button_margin_left">
+            android:orientation="horizontal"
+            android:layout_below="@+id/person_divider">
 
             <Button
                 android:id="@+id/add_leave_button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/add_leave"
                 android:textColor="@color/colorPrimaryDark" />
 
             <Button
                 android:id="@+id/cancel_leave_button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/add_leave_button"
+                android:layout_weight="1"
                 android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/person_list_button_margin_left"
                 android:text="@string/cancel_leave"
                 android:textColor="@color/colorTextSecondary" />
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </RelativeLayout>

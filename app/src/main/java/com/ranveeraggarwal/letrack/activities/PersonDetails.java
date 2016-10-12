@@ -7,13 +7,20 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.ranveeraggarwal.letrack.R;
+import com.roomorama.caldroid.CaldroidFragment;
+
+import java.util.Calendar;
 
 public class PersonDetails extends AppCompatActivity {
 
     private Toolbar toolbar;
+    CaldroidFragment caldroidFragment;
+    Button showCalender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,24 @@ public class PersonDetails extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Amar Akbar");
+
+        caldroidFragment = new CaldroidFragment();
+        Bundle args = new Bundle();
+        Calendar cal = Calendar.getInstance();
+        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+        args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY);
+        caldroidFragment.setArguments(args);
+
+        showCalender = (Button) findViewById(R.id.show_calender);
+        showCalender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CaldroidFragment dialogCaldroidFragment = CaldroidFragment.newInstance("Select a date", 3, 2013);
+                dialogCaldroidFragment.show(getSupportFragmentManager(),"TAG");
+            }
+        });
+
     }
 
     @Override
