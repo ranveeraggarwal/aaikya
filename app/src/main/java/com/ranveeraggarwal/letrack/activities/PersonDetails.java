@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
@@ -26,6 +27,7 @@ public class PersonDetails extends AppCompatActivity {
 
     private Toolbar toolbar;
     Button showCalender;
+    TextView currentMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class PersonDetails extends AppCompatActivity {
 
         final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
+        currentMonth = (TextView) findViewById(R.id.month);
+
         Calendar ept =  Calendar.getInstance();
         ept.add(ept.DATE, 1);
         ept.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -49,16 +53,16 @@ public class PersonDetails extends AppCompatActivity {
         Log.d("Yolo", pcs.toString());
         Log.d("Hello", x.toString());
         // Add event 1 on Sun, 07 Jun 2015 18:20:51 GMT
-        Event ev1 = new Event(Color.GREEN, pcs);
+        Event ev1 = new Event(getResources().getColor(R.color.colorAccent), pcs);
         compactCalendar.addEvent(ev1);
 
-        // Query for events on Sun, 07 Jun 2015 GMT.
-        // Time is not relevant when querying for events, since events are returned by day.
-        // So you can pass in any arbitary DateTime and you will receive all events for that day.
-        List<Event> events = compactCalendar.getEvents(1476111608000L); // can also take a Date object
-
-        // events has size 2 with the 2 events inserted previously
-        Log.d("Lol", "Events: " + events);
+//        // Query for events on Sun, 07 Jun 2015 GMT.
+//        // Time is not relevant when querying for events, since events are returned by day.
+//        // So you can pass in any arbitary DateTime and you will receive all events for that day.
+//        List<Event> events = compactCalendar.getEvents(1476111608000L); // can also take a Date object
+//
+//        // events has size 2 with the 2 events inserted previously
+//        Log.d("Lol", "Events: " + events);
 
         // define a listener to receive callbacks when certain events happen.
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
@@ -70,6 +74,7 @@ public class PersonDetails extends AppCompatActivity {
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
+                currentMonth.setText(firstDayOfNewMonth.getMonth() + 1 + "-" + firstDayOfNewMonth.getYear());
                 Log.d("Lol", "Month was scrolled to: " + firstDayOfNewMonth);
             }
         });
