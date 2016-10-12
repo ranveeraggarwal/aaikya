@@ -19,7 +19,8 @@
         <LinearLayout
             style="@style/card_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -71,133 +72,44 @@
 
 
         <LinearLayout
-            style="@style/card_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:text="Mo"
-                        android:gravity="center"
-                        android:background="@drawable/bg_circle_red"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:text="Tu"
-                        android:gravity="center"
-                        android:background="@drawable/bg_circle_grey"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:text="We"
-                        android:gravity="center"
-                        android:background="@drawable/bg_circle_red"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:text="Th"
-                        android:gravity="center"
-                        android:background="@drawable/bg_circle_grey"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:text="Fr"
-                        android:gravity="center"
-                        android:background="@drawable/bg_circle_grey"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:text="Sa"
-                        android:gravity="center"
-                        android:background="@drawable/bg_circle_grey"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:text="Su"
-                        android:gravity="center"
-                        android:background="@drawable/bg_circle_red"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This Week"
-                android:textAlignment="center"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:textColor="@color/colorTextPrimary"/>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="8dp"
+            android:layout_weight="9"
             android:background="#ffffff"
             android:elevation="1dp"
             android:orientation="vertical">
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="October, 2016"
+                android:textColor="@color/colorTextPrimary"
+
+                android:textStyle="bold" />
+
+            <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/compactcalendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                app:compactCalendarBackgroundColor="@android:color/transparent"
+                app:compactCalendarCurrentDayBackgroundColor="@android:color/transparent"
+                app:compactCalendarCurrentSelectedDayBackgroundColor="@android:color/transparent"
+                app:compactCalendarMultiEventIndicatorColor="@android:color/transparent"
+                app:compactCalendarTextColor="@color/colorTextPrimary"
+                app:compactCalendarTextSize="12sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_vertical_margin">
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -251,34 +163,16 @@
 
             </LinearLayout>
 
-            <View
-                android:id="@+id/person_divider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:layout_below="@+id/information_container"
-                android:layout_marginEnd="@dimen/divider_horizontal_margin"
-                android:layout_marginStart="@dimen/divider_horizontal_margin"
-                android:background="@color/colorDivider" />
-
-            <Button
-                android:id="@+id/show_calender"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:text="Show Calendar Dates" />
-
-
         </LinearLayout>
 
 
         <LinearLayout
             style="@style/card_style"
-            android:padding="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="0dp">
 
             <Button
                 android:layout_width="0dp"

@@ -1,25 +1,30 @@
 package com.ranveeraggarwal.letrack.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.ranveeraggarwal.letrack.R;
-import com.roomorama.caldroid.CaldroidFragment;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 public class PersonDetails extends AppCompatActivity {
 
     private Toolbar toolbar;
-    CaldroidFragment caldroidFragment;
     Button showCalender;
 
     @Override
@@ -33,23 +38,41 @@ public class PersonDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Amar Akbar");
 
-        caldroidFragment = new CaldroidFragment();
-        Bundle args = new Bundle();
-        Calendar cal = Calendar.getInstance();
-        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-        args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY);
-        caldroidFragment.setArguments(args);
 
-        showCalender = (Button) findViewById(R.id.show_calender);
-        showCalender.setOnClickListener(new View.OnClickListener() {
+        final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+
+        Calendar ept =  Calendar.getInstance();
+        ept.add(ept.DATE, 1);
+        ept.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Long pcs = ept.getTimeInMillis();
+        Date x = ept.getTime();
+        Log.d("Yolo", pcs.toString());
+        Log.d("Hello", x.toString());
+        // Add event 1 on Sun, 07 Jun 2015 18:20:51 GMT
+        Event ev1 = new Event(Color.GREEN, pcs);
+        compactCalendar.addEvent(ev1);
+
+        // Query for events on Sun, 07 Jun 2015 GMT.
+        // Time is not relevant when querying for events, since events are returned by day.
+        // So you can pass in any arbitary DateTime and you will receive all events for that day.
+        List<Event> events = compactCalendar.getEvents(1476111608000L); // can also take a Date object
+
+        // events has size 2 with the 2 events inserted previously
+        Log.d("Lol", "Events: " + events);
+
+        // define a listener to receive callbacks when certain events happen.
+        compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
-            public void onClick(View v) {
-                CaldroidFragment dialogCaldroidFragment = CaldroidFragment.newInstance("Select a date", 3, 2013);
-                dialogCaldroidFragment.show(getSupportFragmentManager(),"TAG");
+            public void onDayClick(Date dateClicked) {
+                List<Event> events = compactCalendar.getEvents(dateClicked);
+                Log.d("Lol", "Day was clicked: " + dateClicked + " with events " + events);
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+                Log.d("Lol", "Month was scrolled to: " + firstDayOfNewMonth);
             }
         });
-
     }
 
     @Override
