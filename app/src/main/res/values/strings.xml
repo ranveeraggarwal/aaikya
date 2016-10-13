@@ -10,4 +10,12 @@
     <string name="dummy_frequency">2 times a day</string>
     <string name="add_leave">Add Leave</string>
     <string name="cancel_leave">Cancel Leave</string>
+
+    <string-array name="occupations_array">
+        <item>Cook</item>
+        <item>Maid</item>
+        <item>Sweeper</item>
+        <item>Dog Walker</item>
+        <item>Security Guard</item>
+    </string-array>
 </resources>

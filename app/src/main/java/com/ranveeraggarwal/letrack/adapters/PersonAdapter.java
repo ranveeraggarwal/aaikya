@@ -3,11 +3,9 @@ package com.ranveeraggarwal.letrack.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.activities.PersonDetails;
@@ -16,6 +14,8 @@ import com.ranveeraggarwal.letrack.views.PersonViewHolder;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
 
 /**
  * Created by raagga on 10-10-2016.
@@ -54,7 +54,7 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
             public void onClick(View view) {
                 int currentLeaves = Integer.valueOf(holder.getLeaves().getText().toString());
                 holder.setLeaves(currentLeaves + 1);
-                Toast.makeText(context, "Leave Added", Toast.LENGTH_SHORT).show();
+                shortToastMaker(context, "Leave Added");
             }
         });
         holder.cancelLeave.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +62,7 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
             public void onClick(View view) {
                 int currentLeaves = Integer.valueOf(holder.getLeaves().getText().toString());
                 if (currentLeaves != 0) holder.setLeaves(currentLeaves - 1);
-                Toast.makeText(context, "Leave Removed", Toast.LENGTH_SHORT).show();
+                shortToastMaker(context, "Leave Removed");
             }
         });
         holder.root.setOnClickListener(new View.OnClickListener() {

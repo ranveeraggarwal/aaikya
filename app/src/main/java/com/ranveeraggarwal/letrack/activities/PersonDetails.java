@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
+
 public class PersonDetails extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -86,17 +88,13 @@ public class PersonDetails extends AppCompatActivity {
         return true;
     }
 
-    public void toaster(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
         if (menuItem.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-            toaster("Setting will be implemented soon :)");
+            shortToastMaker(this, "Setting will be implemented soon :)");
             return true;
         } else if (menuItem.getItemId() == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);

@@ -1,26 +1,25 @@
 package com.ranveeraggarwal.letrack;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.ranveeraggarwal.letrack.activities.AddPersonActivity;
 import com.ranveeraggarwal.letrack.activities.SettingsActivity;
 import com.ranveeraggarwal.letrack.adapters.PersonAdapter;
 import com.ranveeraggarwal.letrack.models.Person;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         addPersonFab = (FloatingActionButton)  findViewById(R.id.add_person_fab);
         addPersonFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                toaster("Fab");
+                Intent intent = new Intent(MainActivity.this, AddPersonActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -74,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void toaster(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         if (menuItem.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-            toaster("Setting will be implemented soon :)");
+            shortToastMaker(this, "Setting will be implemented soon :)");
             return true;
         }
 
