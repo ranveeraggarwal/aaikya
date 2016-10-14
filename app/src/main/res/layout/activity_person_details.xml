@@ -10,138 +10,51 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/person_details_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-
-        <LinearLayout
-            style="@style/card_style"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dummy_occupation"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cycle: 5th of every month"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center_vertical"
-                    android:text="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Frequency"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorTextPrimary" />
-
-            </LinearLayout>
-        </LinearLayout>
-
+        android:layout_below="@id/app_bar"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="9"
-            android:background="#ffffff"
-            android:elevation="1dp"
+            android:layout_height="wrap_content"
+
             android:orientation="vertical">
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="October, 2016"
-                android:textColor="@color/colorTextPrimary"
-                android:id="@+id/month"
-                android:textStyle="bold" />
-
-            <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/compactcalendar_view"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="8"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                app:compactCalendarBackgroundColor="@android:color/transparent"
-                app:compactCalendarCurrentDayBackgroundColor="@android:color/transparent"
-                app:compactCalendarCurrentSelectedDayBackgroundColor="@android:color/transparent"
-                app:compactCalendarMultiEventIndicatorColor="@android:color/transparent"
-                app:compactCalendarTextColor="@color/colorTextPrimary"
-                app:compactCalendarTextSize="12sp" />
-
             <LinearLayout
+                style="@style/card_style"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                android:orientation="horizontal">
+                android:paddingTop="@dimen/activity_vertical_margin">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:text="3"
-                        android:textAlignment="center"
-                        android:textSize="24sp" />
+                        android:text="@string/dummy_occupation"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="Leaves this Month"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorTextPrimary" />
+                        android:text="Cycle: 5th of every month"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:orientation="vertical">
 
                     <TextView
@@ -149,53 +62,150 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:gravity="center_vertical"
-                        android:text="2.4"
+                        android:text="1"
                         android:textAlignment="center"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Average"
+                        android:text="Frequency"
                         android:textAlignment="center"
-                        android:textColor="@color/colorTextPrimary" />
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:elevation="1dp"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+
+                <TextView
+                    android:id="@+id/month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="October, 2016"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textStyle="bold" />
+
+                <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/compactcalendar_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    app:compactCalendarBackgroundColor="@android:color/transparent"
+                    app:compactCalendarCurrentDayBackgroundColor="@android:color/transparent"
+                    app:compactCalendarCurrentSelectedDayBackgroundColor="@android:color/transparent"
+                    app:compactCalendarMultiEventIndicatorColor="@android:color/transparent"
+                    app:compactCalendarTextColor="@color/colorTextPrimary"
+                    app:compactCalendarTextSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_margin">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:text="3"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Leaves this Month"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:text="2.4"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Average"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="64dp" />
+
+
         </LinearLayout>
+    </ScrollView>
 
+    <LinearLayout
+        style="@style/card_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        android:padding="0dp">
 
-        <LinearLayout
-            style="@style/card_style"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:padding="0dp">
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/add_leave"
+            android:textColor="@color/colorPrimaryDark" />
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:text="@string/add_leave"
-                android:textColor="@color/colorPrimaryDark" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:padding="@dimen/person_list_button_margin_left"
-                android:text="@string/cancel_leave"
-                android:textColor="@color/colorTextSecondary" />
-        </LinearLayout>
-
-
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/cancel_leave"
+            android:textColor="@color/colorTextSecondary" />
     </LinearLayout>
-
 
 </RelativeLayout>
