@@ -28,8 +28,7 @@
             <LinearLayout
                 style="@style/card_style"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="0dp"
@@ -49,8 +48,7 @@
             <LinearLayout
                 style="@style/card_style"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="0dp"
@@ -69,8 +67,7 @@
             <LinearLayout
                 style="@style/card_style"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -80,18 +77,19 @@
                     android:text="Start Date"
                     android:textColor="@color/colorTextPrimary" />
 
-                <NumberPicker
+                <android.support.v7.widget.AppCompatSpinner
                     android:id="@+id/new_person_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4" />
             </LinearLayout>
 
+
+
             <LinearLayout
                 style="@style/card_style"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <RadioGroup
@@ -143,7 +141,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2" />
+                android:layout_weight="3" />
         </LinearLayout>
     </ScrollView>
 

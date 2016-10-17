@@ -25,8 +25,9 @@ import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
 public class AddPersonActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    NumberPicker numberPicker;
+//    NumberPicker numberPicker;
     Spinner selectOccupation;
+    Spinner selectDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,6 @@ public class AddPersonActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add Person");
-
-        numberPicker = (NumberPicker) findViewById(R.id.new_person_date);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(31);
-        numberPicker.setWrapSelectorWheel(true);
 
         selectOccupation = (Spinner) findViewById(R.id.new_person_occupation);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -61,11 +57,33 @@ public class AddPersonActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        selectDate = (Spinner) findViewById(R.id.new_person_date);
+        ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter.createFromResource(this,
+                R.array.date_array, android.R.layout.simple_spinner_item);
+        dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectDate.setAdapter(dateAdapter);
+        selectDate.setSelection(0);
+        selectDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                Log.d("Spinner", item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem settingsItem = menu.findItem(R.id.action_settings);
+        settingsItem.setVisible(false);
+        MenuItem addItem = menu.findItem(R.id.action_add_person);
+        addItem.setVisible(true);
         return true;
     }
 
