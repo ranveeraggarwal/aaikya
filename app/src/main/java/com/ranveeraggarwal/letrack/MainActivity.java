@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         int[] frequencies = {2, 1, 3, 2, 1};
         int[] leaves = {1, 4, 0, 0, 10};
         for (int i=0; i<names.length && i<occupations.length && i<frequencies.length && i<leaves.length; i++) {
-            Person person = new Person(names[i], frequencies[i], occupations[i], leaves[i], 1);
+            Person person = new Person(names[i], frequencies[i], occupations[i], leaves[i], 1, 1000);
             data.add(person);
         }
 

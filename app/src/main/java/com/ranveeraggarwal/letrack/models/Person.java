@@ -11,6 +11,16 @@ public class Person {
     private int startDate;
     private String occupation;
 
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    private int salary;
+
     public Person () {}
     public Person (String name, int frequency, String occupation, int startDate) {
         this.setName(name);
@@ -18,13 +28,23 @@ public class Person {
         this.setOccupation(occupation);
         this.setLeaves(0);
         this.setStartDate(startDate);
+        this.setSalary(0);
     }
-    public Person (String name, int frequency, String occupation, int leaves, int startDate) {
+    public Person (String name, int frequency, String occupation, int startDate, int salary) {
+        this.setName(name);
+        this.setFrequency(frequency);
+        this.setOccupation(occupation);
+        this.setLeaves(0);
+        this.setStartDate(startDate);
+        this.setSalary(salary);
+    }
+    public Person (String name, int frequency, String occupation, int leaves, int startDate, int salary) {
         this.setName(name);
         this.setFrequency(frequency);
         this.setOccupation(occupation);
         this.setLeaves(leaves);
         this.setStartDate(startDate);
+        this.setSalary(salary);
     }
 
     public String getName() {

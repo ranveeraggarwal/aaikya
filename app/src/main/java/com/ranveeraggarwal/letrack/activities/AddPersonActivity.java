@@ -11,11 +11,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ranveeraggarwal.letrack.MainActivity;
 import com.ranveeraggarwal.letrack.R;
+import com.ranveeraggarwal.letrack.models.Person;
+import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +32,26 @@ import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
 public class AddPersonActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-//    NumberPicker numberPicker;
+    TextView addPersonName;
     Spinner selectOccupation;
     Spinner selectDate;
+    Button addPersonSubmit;
+    RadioGroup addPersonFrequencyGroup;
+    RadioButton addPersonFrequencyCheckedButton;
+
+    String selectedName;
+    String selectedOccupation;
+    String selectedStartDate;
+    String selectedFrequency;
+
+    DatabaseAdapter databaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
+
+        databaseAdapter = new DatabaseAdapter(this);
 
         toolbar = (Toolbar) findViewById(R.id.add_person_app_bar);
         setSupportActionBar(toolbar);
@@ -40,17 +59,19 @@ public class AddPersonActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add Person");
 
+        addPersonName = (TextView) findViewById(R.id.new_person_name);
+
         selectOccupation = (Spinner) findViewById(R.id.new_person_occupation);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.occupations_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectOccupation.setAdapter(adapter);
         selectOccupation.setSelection(0);
+        selectedOccupation = selectOccupation.getSelectedItem().toString();
         selectOccupation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                Log.d("Spinner", item);
+                selectedOccupation = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -64,26 +85,46 @@ public class AddPersonActivity extends AppCompatActivity {
         dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectDate.setAdapter(dateAdapter);
         selectDate.setSelection(0);
+        selectedStartDate = selectDate.getSelectedItem().toString();
         selectDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                Log.d("Spinner", item);
+                selectedStartDate = parent.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        addPersonFrequencyGroup = (RadioGroup) findViewById(R.id.new_person_frequency);
+
+        addPersonSubmit = (Button) findViewById(R.id.add_person_submit);
+        addPersonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedName = addPersonName.getText().toString();
+                int checkedRadioButtonId = addPersonFrequencyGroup.getCheckedRadioButtonId();
+                addPersonFrequencyCheckedButton = (RadioButton) addPersonFrequencyGroup.findViewById(checkedRadioButtonId);
+                selectedFrequency = addPersonFrequencyCheckedButton.getText().toString();
+                databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), 5000);
+                Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
         MenuItem settingsItem = menu.findItem(R.id.action_settings);
         settingsItem.setVisible(false);
+
         MenuItem addItem = menu.findItem(R.id.action_add_person);
         addItem.setVisible(true);
+
         return true;
     }
 
