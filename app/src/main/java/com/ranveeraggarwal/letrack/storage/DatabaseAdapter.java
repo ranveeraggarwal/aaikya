@@ -2,6 +2,7 @@ package com.ranveeraggarwal.letrack.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -40,29 +41,35 @@ public class DatabaseAdapter {
         return contentValues;
     }
 
-    public Person insertPerson(String name, String occupation, int frequency, int startDate, int salary) {
+    public long insertPerson(String name, String occupation, int frequency, int startDate, int salary) {
         try {
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues contentValues = getPersonContentValues(name, occupation, frequency, startDate, salary);
-            db.insert(DatabaseHelper.PERSON_TABLE, null, contentValues);
+            long id = db.insert(DatabaseHelper.PERSON_TABLE, null, contentValues);
             db.close();
-            return new Person(name, frequency, occupation, startDate, salary);
+            return id;
         } catch (Exception e) {
         }
-        return null;
+        return -1;
     }
 
-    public Leave insertLeave(int pid, int date, int fno) {
+    public void getPersons() {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = {DatabaseHelper.P_NAME, DatabaseHelper.P_OCCUPATION, DatabaseHelper.P_FREQUENCY, DatabaseHelper.P_STARTDATE, DatabaseHelper.P_SALARY};
+        Cursor cursor = db.query(DatabaseHelper.PERSON_TABLE, columns, null, null, null, null, null);
+    }
+
+    public long insertLeave(int pid, int date, int fno) {
         try {
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues contentValues = getLeavesContentValues(pid, date, fno);
-            db.insert(DatabaseHelper.LEAVES_TABLE, null, contentValues);
+            long id = db.insert(DatabaseHelper.LEAVES_TABLE, null, contentValues);
             db.close();
-            return new Leave(pid, date, fno);
+            return id;
         } catch (Exception e) {
 
         }
-        return null;
+        return -1;
     }
 
     static class DatabaseHelper extends SQLiteOpenHelper {
@@ -74,14 +81,14 @@ public class DatabaseAdapter {
         private static final String PERSON_TABLE = "person";
         private static final String LEAVES_TABLE = "leaves";
 
-        private static final String P_ID = "id";
+        private static final String P_ID = "_id";
         private static final String P_NAME = "name";
         private static final String P_OCCUPATION = "occupation";
         private static final String P_FREQUENCY = "frequency";
         private static final String P_STARTDATE = "start_date";
         private static final String P_SALARY = "salary";
 
-        private static final String L_ID = "id";
+        private static final String L_ID = "_id";
         private static final String L_PID = "person_id";
         private static final String L_DATE = "date";
         private static final String L_FNO = "f_no";
