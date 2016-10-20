@@ -34,7 +34,6 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
 
     private long currentDate;
     private DatabaseAdapter databaseAdapter;
-    private int currentFrequency;
 
     public PersonAdapter (Context context, List<Person> data) {
         personInflater = LayoutInflater.from(context);
@@ -69,25 +68,23 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
         holder.addLeave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentFrequency = 1;
-                if (databaseAdapter.checkLeave(currentDate, 1, currentPerson.getId())) currentFrequency = 2;
-                if (databaseAdapter.checkLeave(currentDate, 2, currentPerson.getId())) currentFrequency = 3;
-                if (databaseAdapter.checkLeave(currentDate, 3, currentPerson.getId())) currentFrequency = 4;
-                if (databaseAdapter.checkLeave(currentDate, 4, currentPerson.getId())) currentFrequency = 5;
-                if (currentFrequency <= currentPerson.getFrequency()) {
+                int currentFrequency = databaseAdapter.getLeavesForDate(currentDate, currentPerson.getId()).size();
+                if (currentFrequency < currentPerson.getFrequency()){
                     int currentLeaves = Integer.valueOf(holder.getLeaves().getText().toString());
                     if (databaseAdapter.insertLeave(currentPerson.getId(), currentDate, currentFrequency) > 0){
                         holder.setLeaves(currentLeaves + 1);
                         shortToastMaker(context, "Leave Added");
-                    } else
+                        if (currentFrequency+1 == currentPerson.getFrequency())
+                        {
+                            holder.addLeave.setEnabled(false);
+                            holder.addLeave.setTextColor(context.getResources().getColor(R.color.colorTextSecondary));
+                        }
+                    }
+                    else
                     {
                         shortToastMaker(context, "Leave Not Added");
                     }
                 }
-                else  {
-                    holder.addLeave.setEnabled(false);
-                }
-
             }
         });
         holder.cancelLeave.setOnClickListener(new View.OnClickListener() {
