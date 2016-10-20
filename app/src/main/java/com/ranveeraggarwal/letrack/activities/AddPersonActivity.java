@@ -115,7 +115,6 @@ public class AddPersonActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     @Override

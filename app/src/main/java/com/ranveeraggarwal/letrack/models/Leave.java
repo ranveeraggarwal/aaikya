@@ -13,11 +13,11 @@ public class Leave {
         this.date = date;
     }
 
-    public int getPid() {
+    public long getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(long pid) {
         this.pid = pid;
     }
 
@@ -34,13 +34,13 @@ public class Leave {
         this.setFno(0);
     }
 
-    public Leave(int pid, int date, int fno) {
+    public Leave(long pid, long date, int fno) {
         this.pid = pid;
         this.date = date;
         this.fno = fno;
     }
 
     private long date;
-    private int pid;
+    private long pid;
     private int fno;
 }

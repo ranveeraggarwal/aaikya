@@ -38,6 +38,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/person_details_occupation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/dummy_occupation"
@@ -47,6 +48,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/person_details_start_date"
                         android:text="Cycle: 5th of every month"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -63,6 +65,7 @@
                         android:layout_weight="2"
                         android:gravity="center_vertical"
                         android:text="1"
+                        android:id="@+id/person_details_frequency"
                         android:textAlignment="center"
                         android:textSize="20sp" />
 
@@ -155,7 +158,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:gravity="center_vertical"
-                            android:text="2.4"
+                            android:text="1"
                             android:textAlignment="center"
                             android:textSize="20sp" />
 
@@ -164,7 +167,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="Average"
+                            android:text="Today"
                             android:textAlignment="center"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="14sp" />
@@ -197,7 +200,8 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:text="@string/add_leave"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/person_details_add_leave" />
 
         <Button
             android:layout_width="0dp"
@@ -205,7 +209,8 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:text="@string/cancel_leave"
-            android:textColor="@color/colorTextSecondary" />
+            android:textColor="@color/colorTextSecondary"
+            android:id="@+id/person_details_remove_leave"/>
     </LinearLayout>
 
 </RelativeLayout>

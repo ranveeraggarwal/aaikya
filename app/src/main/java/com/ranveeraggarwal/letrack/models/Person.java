@@ -1,10 +1,13 @@
 package com.ranveeraggarwal.letrack.models;
 
+import java.io.Serializable;
+
 /**
  * Created by raagga on 10-10-2016.
  */
 
-public class Person {
+public class Person implements Serializable{
+    private long id;
     private String name;
     private int frequency;
     private int leaves;
@@ -38,7 +41,8 @@ public class Person {
         this.setStartDate(startDate);
         this.setSalary(salary);
     }
-    public Person (String name, int frequency, String occupation, int leaves, int startDate, int salary) {
+    public Person (long id, String name, int frequency, String occupation, int leaves, int startDate, int salary) {
+        this.setId(id);
         this.setName(name);
         this.setFrequency(frequency);
         this.setOccupation(occupation);
@@ -85,5 +89,13 @@ public class Person {
 
     public void setStartDate(int startDate) {
         this.startDate = startDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

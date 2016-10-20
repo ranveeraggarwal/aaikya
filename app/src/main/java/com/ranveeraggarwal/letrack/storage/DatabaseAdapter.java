@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.ranveeraggarwal.letrack.models.Leave;
 import com.ranveeraggarwal.letrack.models.Person;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -36,7 +38,7 @@ public class DatabaseAdapter {
         return contentValues;
     }
 
-    private ContentValues getLeavesContentValues(int pid, long date, int fno) {
+    private ContentValues getLeavesContentValues(long pid, long date, int fno) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.L_PID, pid);
         contentValues.put(DatabaseHelper.L_DATE, date);
@@ -60,13 +62,14 @@ public class DatabaseAdapter {
 
     public List<Person> getPersonList() {
         SQLiteDatabase db = helper.getWritableDatabase();
-        String[] columns = {DatabaseHelper.P_NAME, DatabaseHelper.P_OCCUPATION, DatabaseHelper.P_FREQUENCY, DatabaseHelper.P_STARTDATE, DatabaseHelper.P_SALARY};
+        String[] columns = {DatabaseHelper.P_ID, DatabaseHelper.P_NAME, DatabaseHelper.P_OCCUPATION, DatabaseHelper.P_FREQUENCY, DatabaseHelper.P_STARTDATE, DatabaseHelper.P_SALARY};
         List<Person> allPeople = new ArrayList<>();
         try  {
             Cursor cursor = db.query(DatabaseHelper.PERSON_TABLE, columns, null, null, null, null, null);
             allPeople = new ArrayList<>();
             while (cursor.moveToNext()) {
                 Person currentPerson = new Person(
+                        cursor.getLong(cursor.getColumnIndex(DatabaseHelper.P_ID)),
                         cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_NAME)),
                         Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_FREQUENCY))),
                         cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_OCCUPATION)),
@@ -74,6 +77,20 @@ public class DatabaseAdapter {
                         Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_STARTDATE))),
                         Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_SALARY)))
                 );
+                // get today and clear time of day
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+                cal.clear(Calendar.MINUTE);
+                cal.clear(Calendar.SECOND);
+                cal.clear(Calendar.MILLISECOND);
+                cal.clear(Calendar.AM_PM);
+                cal.set(Calendar.DAY_OF_MONTH, 1);
+                long monthStartDate = cal.getTimeInMillis();
+                cal.add(Calendar.MONTH, 1);
+                long monthEndDate = cal.getTimeInMillis();
+
+                List<Leave> leavesThisMonth = getLeavesInRange(monthStartDate, monthEndDate, currentPerson.getId());
+                currentPerson.setLeaves(leavesThisMonth.size());
                 allPeople.add(currentPerson);
             }
             cursor.close();
@@ -83,7 +100,45 @@ public class DatabaseAdapter {
         return allPeople;
     }
 
-    public long insertLeave(int pid, int date, int fno) {
+    public List<Leave> getLeavesInRange(long startDate, long endDate, long pid) {
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        List<Leave> allDates = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT * FROM " + DatabaseHelper.LEAVES_TABLE + " WHERE "
+                    + DatabaseHelper.L_PID + "=" + pid + " AND " + DatabaseHelper.L_DATE
+                    + " BETWEEN "+ startDate +" AND " + endDate + ";";
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            while (cursor.moveToNext()) {
+                Leave leave = new Leave(
+                        pid,
+                        cursor.getLong(cursor.getColumnIndex(DatabaseHelper.L_DATE)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.L_FNO))
+                        );
+                allDates.add(leave);
+            }
+            cursor.close();
+        } catch (Exception e) {
+
+        }
+        return allDates;
+    }
+
+    public boolean checkLeave(long date, int fno, long pid) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String selectString = "SELECT * FROM " + DatabaseHelper.LEAVES_TABLE + " WHERE " + DatabaseHelper.L_DATE + " = " + date
+                + " AND " + DatabaseHelper.L_FNO + " = " + fno
+                + " AND " + DatabaseHelper.L_PID + " = " + pid + ";";
+        Cursor cursor = db.rawQuery(selectString, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
+    public long insertLeave(long pid, long date, int fno) {
         try {
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues contentValues = getLeavesContentValues(pid, date, fno);

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.ranveeraggarwal.letrack.R;
+import com.ranveeraggarwal.letrack.models.Person;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -27,21 +28,60 @@ import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
 
 public class PersonDetails extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    Button showCalender;
     TextView currentMonth;
+    TextView occupation;
+    TextView startDate;
+    TextView frequency;
+
+    Person person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_details);
 
-        toolbar= (Toolbar) findViewById(R.id.app_bar);
+        Intent intent = getIntent();
+        person = (Person) intent.getSerializableExtra("currentPerson");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Amar Akbar");
+        getSupportActionBar().setTitle(person.getName());
 
+        occupation = (TextView) findViewById(R.id.person_details_occupation);
+        occupation.setText(person.getOccupation());
+
+        startDate = (TextView) findViewById(R.id.person_details_start_date);
+        switch (person.getStartDate()){
+            case 1:
+                startDate.setText("Cycle: 1st of every month");
+                break;
+            case 21:
+                startDate.setText("Cycle: 21st of every month");
+                break;
+            case 31:
+                startDate.setText("Cycle: 31st of every month");
+                break;
+            case 2:
+                startDate.setText("Cycle: 2nd of every month");
+                break;
+            case 22:
+                startDate.setText("Cycle: 22nd of every month");
+                break;
+            case 3:
+                startDate.setText("Cycle: 3rd of every month");
+                break;
+            case 23:
+                startDate.setText("Cycle: 23rd of every month");
+                break;
+            default:
+                startDate.setText("Cycle: " + person.getStartDate() + "th of every month");
+                break;
+        }
+
+        frequency = (TextView) findViewById(R.id.person_details_frequency);
+        frequency.setText(Integer.toString(person.getFrequency()));
 
         final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
