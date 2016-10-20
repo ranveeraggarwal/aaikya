@@ -3,6 +3,7 @@ package com.ranveeraggarwal.letrack.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import com.ranveeraggarwal.letrack.models.Person;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 import com.ranveeraggarwal.letrack.views.PersonViewHolder;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +27,6 @@ import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
 public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
 
     private LayoutInflater personInflater;
-    private PersonViewHolder personViewHolder;
 
     private List<Person> data = Collections.emptyList();
 
@@ -35,13 +34,20 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
 
     private long currentDate;
     private DatabaseAdapter databaseAdapter;
+    private int currentFrequency;
 
     public PersonAdapter (Context context, List<Person> data) {
         personInflater = LayoutInflater.from(context);
         this.data = data;
         this.context = context;
 
+        // TODO: Instead of storing current time, store current date
         Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
+        cal.clear(Calendar.AM_PM);
         currentDate = cal.getTimeInMillis();
         databaseAdapter = new DatabaseAdapter(context);
     }
@@ -49,8 +55,7 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = personInflater.inflate(R.layout.person_item, parent, false);
-        personViewHolder = new PersonViewHolder(view);
-        return personViewHolder;
+        return new PersonViewHolder(view);
     }
 
     @Override
@@ -61,19 +66,28 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
         holder.setFrequency(currentPerson.getFrequency());
         holder.setLeaves(currentPerson.getLeaves());
 
-        int currentFrequency = 0;
-        if (databaseAdapter.checkLeave(currentDate, 1, currentPerson.getId())) currentFrequency = 1;
-        else if (databaseAdapter.checkLeave(currentDate, 2, currentPerson.getId())) currentFrequency = 2;
-        else if (databaseAdapter.checkLeave(currentDate, 3, currentPerson.getId())) currentFrequency = 3;
-        else if (databaseAdapter.checkLeave(currentDate, 4, currentPerson.getId())) currentFrequency = 4;
-
         holder.addLeave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int currentLeaves = Integer.valueOf(holder.getLeaves().getText().toString());
-                holder.setLeaves(currentLeaves + 1);
-                //databaseAdapter.insertLeave(currentPerson.getId(), currentDate, currentFrequency);
-                shortToastMaker(context, "Leave Added");
+                currentFrequency = 1;
+                if (databaseAdapter.checkLeave(currentDate, 1, currentPerson.getId())) currentFrequency = 2;
+                if (databaseAdapter.checkLeave(currentDate, 2, currentPerson.getId())) currentFrequency = 3;
+                if (databaseAdapter.checkLeave(currentDate, 3, currentPerson.getId())) currentFrequency = 4;
+                if (databaseAdapter.checkLeave(currentDate, 4, currentPerson.getId())) currentFrequency = 5;
+                if (currentFrequency <= currentPerson.getFrequency()) {
+                    int currentLeaves = Integer.valueOf(holder.getLeaves().getText().toString());
+                    if (databaseAdapter.insertLeave(currentPerson.getId(), currentDate, currentFrequency) > 0){
+                        holder.setLeaves(currentLeaves + 1);
+                        shortToastMaker(context, "Leave Added");
+                    } else
+                    {
+                        shortToastMaker(context, "Leave Not Added");
+                    }
+                }
+                else  {
+                    holder.addLeave.setEnabled(false);
+                }
+
             }
         });
         holder.cancelLeave.setOnClickListener(new View.OnClickListener() {
