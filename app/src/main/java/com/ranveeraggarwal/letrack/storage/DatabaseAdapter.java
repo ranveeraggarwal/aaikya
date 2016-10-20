@@ -2,12 +2,16 @@ package com.ranveeraggarwal.letrack.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.ranveeraggarwal.letrack.models.Leave;
 import com.ranveeraggarwal.letrack.models.Person;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by raagga on 18-10-2016.
@@ -49,14 +53,34 @@ public class DatabaseAdapter {
             db.close();
             return id;
         } catch (Exception e) {
+
         }
         return -1;
     }
 
-    public void getPersons() {
+    public List<Person> getPersonList() {
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {DatabaseHelper.P_NAME, DatabaseHelper.P_OCCUPATION, DatabaseHelper.P_FREQUENCY, DatabaseHelper.P_STARTDATE, DatabaseHelper.P_SALARY};
-        Cursor cursor = db.query(DatabaseHelper.PERSON_TABLE, columns, null, null, null, null, null);
+        List<Person> allPeople = new ArrayList<>();
+        try  {
+            Cursor cursor = db.query(DatabaseHelper.PERSON_TABLE, columns, null, null, null, null, null);
+            allPeople = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                Person currentPerson = new Person(
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_NAME)),
+                        Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_FREQUENCY))),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_OCCUPATION)),
+                        0,
+                        Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_STARTDATE))),
+                        Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_SALARY)))
+                );
+                allPeople.add(currentPerson);
+            }
+            cursor.close();
+        } catch (Exception e) {
+
+        }
+        return allPeople;
     }
 
     public long insertLeave(int pid, int date, int fno) {
@@ -72,7 +96,7 @@ public class DatabaseAdapter {
         return -1;
     }
 
-    static class DatabaseHelper extends SQLiteOpenHelper {
+    private static class DatabaseHelper extends SQLiteOpenHelper {
 
         private static final int DATABASE_VERSION = 1;
 

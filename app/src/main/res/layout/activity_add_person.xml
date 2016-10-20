@@ -30,6 +30,7 @@
 
     <ScrollView
         android:id="@+id/add_person_content"
+        android:layout_below="@id/add_person_app_bar"
         android:layout_width="match_parent"
         android:fillViewport="true"
         android:layout_height="match_parent"

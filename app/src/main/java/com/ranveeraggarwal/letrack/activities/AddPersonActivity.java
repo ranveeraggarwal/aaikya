@@ -112,6 +112,7 @@ public class AddPersonActivity extends AppCompatActivity {
                 else shortToastMaker(view.getContext(), "Person added successfully");
                 Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -139,6 +140,17 @@ public class AddPersonActivity extends AppCompatActivity {
             return true;
         } else if (menuItem.getItemId() == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
+        } else if (menuItem.getItemId() == R.id.action_add_person) {
+            selectedName = addPersonName.getText().toString();
+            int checkedRadioButtonId = addPersonFrequencyGroup.getCheckedRadioButtonId();
+            addPersonFrequencyCheckedButton = (RadioButton) addPersonFrequencyGroup.findViewById(checkedRadioButtonId);
+            selectedFrequency = addPersonFrequencyCheckedButton.getText().toString();
+            long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), 5000);
+            if (id < 0) shortToastMaker(this, "Operation unsuccessful");
+            else shortToastMaker(this, "Person added successfully");
+            Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(menuItem);

@@ -18,6 +18,7 @@ import com.ranveeraggarwal.letrack.activities.AddPersonActivity;
 import com.ranveeraggarwal.letrack.activities.SettingsActivity;
 import com.ranveeraggarwal.letrack.adapters.PersonAdapter;
 import com.ranveeraggarwal.letrack.models.Person;
+import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView personList;
 
     private PersonAdapter personAdapter;
+    private DatabaseAdapter databaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        databaseAdapter = new DatabaseAdapter(this);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         personList = (RecyclerView) findViewById(R.id.person_list);
-        personAdapter = new PersonAdapter(this, getData());
+        personAdapter = new PersonAdapter(this, databaseAdapter.getPersonList());
         personList.setAdapter(personAdapter);
         personList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -57,19 +61,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static List<Person> getData() {
-        List<Person> data = new ArrayList<>();
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
-        String[] names = {"Amar Kumar", "Anthony Gonzalves", "Akbar Mohammed", "Gurpreet Kaur", "Dheerendra Dutta"};
-        String[] occupations = {"Cook", "Sweeper", "Dog Walker", "Gardener", "Bachcha"};
-        int[] frequencies = {2, 1, 3, 2, 1};
-        int[] leaves = {1, 4, 0, 0, 10};
-        for (int i=0; i<names.length && i<occupations.length && i<frequencies.length && i<leaves.length; i++) {
-            Person person = new Person(names[i], frequencies[i], occupations[i], leaves[i], 1, 1000);
-            data.add(person);
-        }
-
-        return data;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
