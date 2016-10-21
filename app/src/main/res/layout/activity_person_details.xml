@@ -109,9 +109,9 @@
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     app:compactCalendarBackgroundColor="@android:color/transparent"
-                    app:compactCalendarCurrentDayBackgroundColor="@android:color/transparent"
-                    app:compactCalendarCurrentSelectedDayBackgroundColor="@android:color/transparent"
-                    app:compactCalendarMultiEventIndicatorColor="@android:color/transparent"
+                    app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
+                    app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorAccentLight"
+                    app:compactCalendarMultiEventIndicatorColor="@color/colorAccent"
                     app:compactCalendarTextColor="@color/colorTextPrimary"
                     app:compactCalendarTextSize="12sp" />
 
@@ -138,11 +138,12 @@
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/person_details_leaves_this_month_desc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="Leaves this Month"
+                            android:text="Leaves this month"
                             android:textAlignment="center"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="14sp" />
@@ -165,6 +166,7 @@
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/person_details_leaves_today_desc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

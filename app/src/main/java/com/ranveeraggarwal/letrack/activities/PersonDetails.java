@@ -15,9 +15,11 @@ import android.widget.TextView;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.ranveeraggarwal.letrack.R;
+import com.ranveeraggarwal.letrack.models.Leave;
 import com.ranveeraggarwal.letrack.models.Person;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +29,7 @@ import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentMonth;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentMonthOffset;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.getMonthName;
 
 public class PersonDetails extends AppCompatActivity {
 
@@ -40,6 +43,8 @@ public class PersonDetails extends AppCompatActivity {
     TextView frequency;
     TextView leavesToday;
     TextView leavesThisMonth;
+    TextView leavesTodayDesc;
+    TextView leavesThisMonthDesc;
 
     Button addLeave;
     Button removeLeave;
@@ -64,6 +69,8 @@ public class PersonDetails extends AppCompatActivity {
         frequency = (TextView) findViewById(R.id.person_details_frequency);
         leavesToday = (TextView) findViewById(R.id.person_details_leaves_today);
         leavesThisMonth = (TextView) findViewById(R.id.person_details_leaves_this_month);
+        leavesTodayDesc = (TextView) findViewById(R.id.person_details_leaves_today_desc);
+        leavesThisMonthDesc = (TextView) findViewById(R.id.person_details_leaves_this_month_desc);
 
         addLeave = (Button) findViewById(R.id.person_details_add_leave);
         removeLeave = (Button) findViewById(R.id.person_details_remove_leave);
@@ -182,38 +189,41 @@ public class PersonDetails extends AppCompatActivity {
 
 
         final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        
+        long something = getCurrentMonth();
+        Event event = new Event(getResources().getColor(R.color.colorAccent), something);
+        compactCalendar.addEvent(event);
 
-        Calendar ept =  Calendar.getInstance();
-        ept.add(ept.DATE, 1);
-        ept.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Long pcs = ept.getTimeInMillis();
-        Date x = ept.getTime();
-        Log.d("Yolo", pcs.toString());
-        Log.d("Hello", x.toString());
-        // Add event 1 on Sun, 07 Jun 2015 18:20:51 GMT
-        Event ev1 = new Event(getResources().getColor(R.color.colorAccent), pcs);
-        compactCalendar.addEvent(ev1);
+        List<Leave> allLeaves = databaseAdapter.getLeavesForPerson(person.getId());
+        for (int i=0; i<allLeaves.size(); i++) {
+            Event eventa = new Event(getResources().getColor(R.color.colorAccent), allLeaves.get(i).getDate());
+            compactCalendar.addEvent(eventa);
+        }
 
-//        // Query for events on Sun, 07 Jun 2015 GMT.
-//        // Time is not relevant when querying for events, since events are returned by day.
-//        // So you can pass in any arbitary DateTime and you will receive all events for that day.
-//        List<Event> events = compactCalendar.getEvents(1476111608000L); // can also take a Date object
-//
-//        // events has size 2 with the 2 events inserted previously
-//        Log.d("Lol", "Events: " + events);
-
-        // define a listener to receive callbacks when certain events happen.
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
                 List<Event> events = compactCalendar.getEvents(dateClicked);
-                Log.d("Lol", "Day was clicked: " + dateClicked + " with events " + events);
+                //Log.d("Lol", "Day was clicked: " + dateClicked + " with events " + events);
+//                long timeInMillis = dateClicked.getTime();
+//                int leavesForTheDay = databaseAdapter.getLeavesForDate(timeInMillis, person.getId()).size();
+//                leavesToday.setText(""+leavesForTheDay);
+//                leavesTodayDesc.setText("On selected date");
             }
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-                currentMonth.setText(firstDayOfNewMonth.getMonth() + 1 + "-" + firstDayOfNewMonth.getYear());
-                Log.d("Lol", "Month was scrolled to: " + firstDayOfNewMonth);
+
+                currentMonth.setText(getMonthName(firstDayOfNewMonth.getMonth() + 1) + ", " + (firstDayOfNewMonth.getYear() + 1900));
+//                long startDate = firstDayOfNewMonth.getTime();
+//                long endDate = startDate + getCurrentMonthOffset(1) - getCurrentMonth();
+//                //Log.d("Lol", "Month was scrolled to: " + firstDayOfNewMonth);
+//                int leavesForTheMonth = databaseAdapter.getLeavesInRange(startDate, endDate, person.getId()).size();
+//                leavesThisMonth.setText(""+leavesForTheMonth);
+//                leavesThisMonthDesc.setText("In selected month");
+//                int leavesForTheDay = databaseAdapter.getLeavesForDate(startDate, person.getId()).size();
+//                leavesToday.setText(""+leavesForTheDay);
+//                leavesTodayDesc.setText("On selected date");
             }
         });
     }

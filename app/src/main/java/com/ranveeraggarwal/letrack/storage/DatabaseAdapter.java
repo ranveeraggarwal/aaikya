@@ -88,6 +88,29 @@ public class DatabaseAdapter {
         return allPeople;
     }
 
+    public List<Leave> getLeavesForPerson(long pid) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        List<Leave> allDates = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT * FROM " + DatabaseHelper.LEAVES_TABLE + " WHERE "
+                    + DatabaseHelper.L_PID + "=" + pid + ";";
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            while (cursor.moveToNext()) {
+                Leave leave = new Leave(
+                        pid,
+                        cursor.getLong(cursor.getColumnIndex(DatabaseHelper.L_DATE)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.L_FNO))
+                );
+                allDates.add(leave);
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+
+        }
+        return allDates;
+    }
+
     public List<Leave> getLeavesInRange(long startDate, long endDate, long pid) {
 
         SQLiteDatabase db = helper.getWritableDatabase();
