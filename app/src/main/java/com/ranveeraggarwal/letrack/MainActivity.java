@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,13 +17,9 @@ import com.microsoft.sonoma.crashes.Crashes;
 import com.ranveeraggarwal.letrack.activities.AddPersonActivity;
 import com.ranveeraggarwal.letrack.activities.SettingsActivity;
 import com.ranveeraggarwal.letrack.adapters.PersonAdapter;
-import com.ranveeraggarwal.letrack.models.Person;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
+import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddPersonActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -65,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        personAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.ranveeraggarwal.letrack.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,47 +11,76 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.models.Person;
+import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
+import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentMonth;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentMonthOffset;
 
 public class PersonDetails extends AppCompatActivity {
+
+    DatabaseAdapter databaseAdapter;
+
+    Toolbar toolbar;
 
     TextView currentMonth;
     TextView occupation;
     TextView startDate;
     TextView frequency;
+    TextView leavesToday;
+    TextView leavesThisMonth;
+
+    Button addLeave;
+    Button removeLeave;
 
     Person person;
+
+    int todayLeaves;
+    int thisMonthLeaves;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_details);
 
+        databaseAdapter = new DatabaseAdapter(this);
+
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+
+        currentMonth = (TextView) findViewById(R.id.month);
+        occupation = (TextView) findViewById(R.id.person_details_occupation);
+        startDate = (TextView) findViewById(R.id.person_details_start_date);
+        frequency = (TextView) findViewById(R.id.person_details_frequency);
+        leavesToday = (TextView) findViewById(R.id.person_details_leaves_today);
+        leavesThisMonth = (TextView) findViewById(R.id.person_details_leaves_this_month);
+
+        addLeave = (Button) findViewById(R.id.person_details_add_leave);
+        removeLeave = (Button) findViewById(R.id.person_details_remove_leave);
+
         Intent intent = getIntent();
         person = (Person) intent.getSerializableExtra("currentPerson");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        todayLeaves = databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size();
+        thisMonthLeaves = databaseAdapter.getLeavesInRange(getCurrentMonth(), getCurrentMonthOffset(1), person.getId()).size();
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(person.getName());
 
-        occupation = (TextView) findViewById(R.id.person_details_occupation);
         occupation.setText(person.getOccupation());
 
-        startDate = (TextView) findViewById(R.id.person_details_start_date);
         switch (person.getStartDate()){
             case 1:
                 startDate.setText("Cycle: 1st of every month");
@@ -80,12 +108,80 @@ public class PersonDetails extends AppCompatActivity {
                 break;
         }
 
-        frequency = (TextView) findViewById(R.id.person_details_frequency);
         frequency.setText(Integer.toString(person.getFrequency()));
 
-        final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        leavesToday.setText(todayLeaves+"");
+        leavesThisMonth.setText(thisMonthLeaves+"");
 
-        currentMonth = (TextView) findViewById(R.id.month);
+        if (databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size() >= person.getFrequency())
+        {
+            addLeave.setEnabled(false);
+            addLeave.setTextColor(this.getResources().getColor(R.color.colorTextSecondary));
+        }
+        if (databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size() > 0) {
+            removeLeave.setEnabled(true);
+            removeLeave.setTextColor(this.getResources().getColor(R.color.colorPrimaryDark));
+        }
+
+        addLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentLeaves = databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size();
+                if (currentLeaves < person.getFrequency()){
+                    if (databaseAdapter.insertLeave(person.getId(), getCurrentDate(), currentLeaves+1) > 0){
+                        currentLeaves++;
+                        todayLeaves++;
+                        thisMonthLeaves++;
+                        leavesToday.setText(todayLeaves+"");
+                        leavesThisMonth.setText(thisMonthLeaves+"");
+                    }
+                    else
+                    {
+                        shortToastMaker(v.getContext(), "Leave Not Added");
+                    }
+                }
+                if (currentLeaves >= person.getFrequency())
+                {
+                    addLeave.setEnabled(false);
+                    addLeave.setTextColor(v.getContext().getResources().getColor(R.color.colorTextSecondary));
+                }
+                if (currentLeaves > 0) {
+                    removeLeave.setEnabled(true);
+                    removeLeave.setTextColor(v.getContext().getResources().getColor(R.color.colorPrimaryDark));
+                }
+            }
+        });
+
+        removeLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentLeaves = databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size();
+                if (currentLeaves > 0 ){
+                    if (databaseAdapter.deleteLeave(person.getId(), getCurrentDate(), currentLeaves) > 0) {
+                        currentLeaves--;
+                        todayLeaves--;
+                        thisMonthLeaves--;
+                        leavesToday.setText(todayLeaves+"");
+                        leavesThisMonth.setText(thisMonthLeaves+"");
+                    }
+                    else {
+                        shortToastMaker(v.getContext(), "Leave Not Removed");
+                    }
+                }
+                if (currentLeaves == 0) {
+                    removeLeave.setEnabled(false);
+                    removeLeave.setTextColor(v.getContext().getResources().getColor(R.color.colorTextSecondary));
+                }
+                if (currentLeaves < person.getFrequency()) {
+                    addLeave.setEnabled(true);
+                    addLeave.setTextColor(v.getContext().getResources().getColor(R.color.colorPrimaryDark));
+                }
+            }
+        });
+
+
+
+        final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
         Calendar ept =  Calendar.getInstance();
         ept.add(ept.DATE, 1);

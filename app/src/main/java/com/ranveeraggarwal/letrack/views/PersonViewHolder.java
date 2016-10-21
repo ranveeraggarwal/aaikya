@@ -66,10 +66,6 @@ public class PersonViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setLeaves(int leaves) {
-        if (Integer.toString(leaves).length() == 1) {
-            this.leaves.setText("0" + leaves);
-        } else {
-            this.leaves.setText(leaves + "");
-        }
+        this.leaves.setText(Integer.toString(leaves));
     }
 }

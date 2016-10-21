@@ -5,29 +5,22 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ranveeraggarwal.letrack.MainActivity;
 import com.ranveeraggarwal.letrack.R;
-import com.ranveeraggarwal.letrack.models.Person;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.ranveeraggarwal.letrack.utils.RepetitiveUI.shortToastMaker;
+import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
 
 public class AddPersonActivity extends AppCompatActivity {
 

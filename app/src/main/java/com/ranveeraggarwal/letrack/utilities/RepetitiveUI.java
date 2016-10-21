@@ -1,4 +1,4 @@
-package com.ranveeraggarwal.letrack.utils;
+package com.ranveeraggarwal.letrack.utilities;
 
 import android.content.Context;
 import android.widget.Toast;

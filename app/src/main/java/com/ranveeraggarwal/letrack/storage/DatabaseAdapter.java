@@ -2,7 +2,6 @@ package com.ranveeraggarwal.letrack.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,8 +11,9 @@ import com.ranveeraggarwal.letrack.models.Leave;
 import com.ranveeraggarwal.letrack.models.Person;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
+import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
 
 /**
  * Created by raagga on 18-10-2016.
@@ -77,23 +77,11 @@ public class DatabaseAdapter {
                         Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_STARTDATE))),
                         Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_SALARY)))
                 );
-                // get today and clear time of day
-                Calendar cal = Calendar.getInstance();
-                cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-                cal.clear(Calendar.MINUTE);
-                cal.clear(Calendar.SECOND);
-                cal.clear(Calendar.MILLISECOND);
-                cal.clear(Calendar.AM_PM);
-                cal.set(Calendar.DAY_OF_MONTH, 1);
-                long monthStartDate = cal.getTimeInMillis();
-                cal.add(Calendar.MONTH, 1);
-                long monthEndDate = cal.getTimeInMillis();
-
-                List<Leave> leavesThisMonth = getLeavesInRange(monthStartDate, monthEndDate, currentPerson.getId());
-                currentPerson.setLeaves(leavesThisMonth.size());
+                currentPerson.setLeaves(getLeavesForDate(getCurrentDate(), currentPerson.getId()).size());
                 allPeople.add(currentPerson);
             }
             cursor.close();
+            db.close();
         } catch (Exception e) {
 
         }
@@ -118,6 +106,7 @@ public class DatabaseAdapter {
                 allDates.add(leave);
             }
             cursor.close();
+            db.close();
         } catch (Exception e) {
 
         }
@@ -141,6 +130,7 @@ public class DatabaseAdapter {
                 allDates.add(leave);
             }
             cursor.close();
+            db.close();
         } catch (Exception e) {
 
         }
@@ -155,9 +145,11 @@ public class DatabaseAdapter {
         Cursor cursor = db.rawQuery(selectString, null);
         if (cursor.getCount() <= 0) {
             cursor.close();
+            db.close();
             return false;
         }
         cursor.close();
+        db.close();
         return true;
     }
 
@@ -172,6 +164,19 @@ public class DatabaseAdapter {
 
         }
         return -1;
+    }
+
+    public int deleteLeave(long pid, long date, int fno) {
+        try {
+            SQLiteDatabase db = helper.getWritableDatabase();
+            String[] whereArgs = {pid+"", date+"", fno+""};
+            int count = db.delete(helper.LEAVES_TABLE, helper.L_PID+"=? AND "+helper.L_DATE + "=? AND " + helper.L_FNO + "=?", whereArgs);
+            db.close();
+            return count;
+        } catch (Exception e) {
+
+        }
+        return 0;
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {

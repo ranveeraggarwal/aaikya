@@ -75,20 +75,20 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/person_divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_height"
-            android:layout_below="@+id/information_container"
-            android:layout_marginEnd="@dimen/divider_horizontal_margin"
-            android:layout_marginStart="@dimen/divider_horizontal_margin"
-            android:background="@color/colorDivider" />
+        <!--<View-->
+            <!--android:id="@+id/person_divider"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/divider_height"-->
+            <!--android:layout_below="@+id/information_container"-->
+            <!--android:layout_marginEnd="@dimen/divider_horizontal_margin"-->
+            <!--android:layout_marginStart="@dimen/divider_horizontal_margin"-->
+            <!--android:background="@color/colorDivider" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/person_divider">
+            android:layout_below="@+id/information_container">
 
             <Button
                 android:id="@+id/add_leave_button"
