@@ -204,10 +204,12 @@ public class PersonDetails extends AppCompatActivity {
 
         final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
+        compactCalendar.shouldDrawIndicatorsBelowSelectedDays(true);
+
 
         List<Leave> allLeaves = databaseAdapter.getLeavesForPerson(person.getId());
         for (int i=0; i<allLeaves.size(); i++) {
-            Event event = new Event(getResources().getColor(R.color.colorAccent), allLeaves.get(i).getDate());
+            Event event = new Event(getResources().getColor(R.color.colorPrimaryDark), allLeaves.get(i).getDate());
             compactCalendar.addEvent(event);
         }
 

@@ -8,20 +8,20 @@
     tools:context="com.ranveeraggarwal.letrack.activities.AddPersonActivity">
 
     <include
-        android:id="@+id/add_person_app_bar"
+        android:id="@+id/add_app_bar"
         layout="@layout/app_bar" />
 
     <LinearLayout
         style="@style/card_style"
-        android:layout_marginBottom="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:orientation="vertical"
         android:padding="0dp">
 
         <Button
-            android:id="@+id/add_person_submit"
+            android:id="@+id/submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -30,12 +30,13 @@
 
     <ScrollView
         android:id="@+id/add_person_content"
-        android:layout_below="@id/add_person_app_bar"
         android:layout_width="match_parent"
-        android:fillViewport="true"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/add_app_bar"
+        android:fillViewport="true">
+
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -53,15 +54,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Name"
+                    android:labelFor="@+id/name_field"
+                    android:text="@string/name_field_desc"
                     android:textColor="@color/colorTextPrimary" />
 
                 <EditText
-                    android:id="@+id/new_person_name"
+                    android:id="@+id/name_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:inputType="textPersonName" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -73,11 +76,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Occupation"
+                    android:text="@string/occupation_field_desc"
                     android:textColor="@color/colorTextPrimary" />
 
                 <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/new_person_occupation"
+                    android:id="@+id/occupation_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4" />
@@ -92,38 +95,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Salary"
+                    android:labelFor="@+id/salary_field"
+                    android:text="@string/salary_field_desc"
                     android:textColor="@color/colorTextPrimary" />
 
                 <EditText
-                    android:id="@+id/new_person_salary"
+                    android:id="@+id/salary_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:inputType="number"/>
+                    android:inputType="number" />
             </LinearLayout>
-
-            <LinearLayout
-                style="@style/card_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Start Date"
-                    android:textColor="@color/colorTextPrimary" />
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/new_person_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4" />
-            </LinearLayout>
-
 
 
             <LinearLayout
@@ -133,7 +115,7 @@
                 android:orientation="vertical">
 
                 <RadioGroup
-                    android:id="@+id/new_person_frequency"
+                    android:id="@+id/frequency_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -142,45 +124,46 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="Frequency"
+                        android:text="@string/frequency_field_desc"
                         android:textColor="@color/colorTextPrimary" />
 
                     <android.support.v7.widget.AppCompatRadioButton
-                        android:id="@+id/new_person_frequency_1"
+                        android:id="@+id/frequency_field_1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="1"
-                        android:checked="true"/>
+                        android:checked="true"
+                        android:text="@string/one" />
 
 
                     <android.support.v7.widget.AppCompatRadioButton
-                        android:id="@+id/new_person_frequency_2"
+                        android:id="@+id/frequency_field_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="2" />
+                        android:text="@string/two" />
 
 
                     <android.support.v7.widget.AppCompatRadioButton
-                        android:id="@+id/new_person_frequency_3"
+                        android:id="@+id/frequency_field_3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="3" />
+                        android:text="@string/three" />
 
 
                     <android.support.v7.widget.AppCompatRadioButton
-                        android:id="@+id/new_person_frequency_4"
+                        android:id="@+id/frequency_field_4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="4" />
+                        android:text="@string/four" />
                 </RadioGroup>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="(Times a day)"/>
+                    android:text="@string/frequency_field_helper" />
             </LinearLayout>
 
             <View

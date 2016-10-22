@@ -40,7 +40,7 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:support-vector-drawable:24.2.1'
-    compile 'com.github.sundeepk:compact-calendar-view:1.9.1'
+    compile 'com.github.sundeepk:compact-calendar-view:1.9.2'
     def sonomaSdkVersion = '0.1.0'
     compile "com.microsoft.sonoma:analytics:${sonomaSdkVersion}"
     compile "com.microsoft.sonoma:crashes:${sonomaSdkVersion}"
