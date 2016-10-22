@@ -11,9 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.microsoft.sonoma.analytics.Analytics;
-import com.microsoft.sonoma.core.Sonoma;
-import com.microsoft.sonoma.crashes.Crashes;
 import com.ranveeraggarwal.letrack.activities.AddPersonActivity;
 import com.ranveeraggarwal.letrack.activities.SettingsActivity;
 import com.ranveeraggarwal.letrack.adapters.PersonAdapter;
@@ -53,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         personAdapter = new PersonAdapter(this, databaseAdapter.getPersonList());
         personList.setAdapter(personAdapter);
         personList.setLayoutManager(new LinearLayoutManager(this));
-
-        Sonoma.start(getApplication(), "36f51d49-2178-49b8-bfda-33e9611f1e26", Analytics.class, Crashes.class);
 
     }
 
