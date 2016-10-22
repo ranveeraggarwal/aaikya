@@ -8,7 +8,7 @@
     tools:context="com.ranveeraggarwal.letrack.MainActivity">
 
     <include
-        android:id="@+id/app_bar"
+        android:id="@+id/details_app_bar"
         layout="@layout/app_bar" />
 
     <android.support.v7.widget.RecyclerView

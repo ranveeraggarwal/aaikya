@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         databaseAdapter = new DatabaseAdapter(this);
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar = (Toolbar) findViewById(R.id.details_app_bar);
         setSupportActionBar(toolbar);
 
         addPersonFab = (FloatingActionButton)  findViewById(R.id.add_person_fab);
