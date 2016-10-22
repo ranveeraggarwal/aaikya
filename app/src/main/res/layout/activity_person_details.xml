@@ -10,185 +10,6 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/person_details_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/app_bar"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:orientation="vertical">
-
-            <LinearLayout
-                style="@style/card_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_vertical_margin">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/person_details_occupation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dummy_occupation"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/person_details_start_date"
-                        android:text="Cycle: 5th of every month"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:text="1"
-                        android:id="@+id/person_details_frequency"
-                        android:textAlignment="center"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="Frequency"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:elevation="1dp"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_vertical_margin">
-
-
-                <TextView
-                    android:id="@+id/month"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="October, 2016"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textStyle="bold" />
-
-                <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/compactcalendar_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="320dp"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    app:compactCalendarBackgroundColor="@android:color/transparent"
-                    app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
-                    app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorAccentLight"
-                    app:compactCalendarMultiEventIndicatorColor="@color/colorAccent"
-                    app:compactCalendarTextColor="@color/colorTextPrimary"
-                    app:compactCalendarTextSize="12sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/activity_vertical_margin">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/person_details_leaves_this_month"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="center_vertical"
-                            android:text="3"
-                            android:textAlignment="center"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/person_details_leaves_this_month_desc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="Leaves this month"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/person_details_leaves_today"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="center_vertical"
-                            android:text="1"
-                            android:textAlignment="center"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/person_details_leaves_today_desc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="Today"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="64dp" />
-
-
-        </LinearLayout>
-    </ScrollView>
-
     <LinearLayout
         style="@style/card_style"
         android:layout_width="match_parent"
@@ -217,5 +38,187 @@
             android:textColor="@color/colorTextSecondary"
             android:id="@+id/person_details_remove_leave"/>
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/person_details_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_below="@id/app_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/card_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/person_details_occupation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dummy_occupation"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="@dimen/big_text_size" />
+
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/person_details_start_date"
+                        android:text="@string/dummy_cycle"
+                        android:textSize="@dimen/subheading_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="@string/dummy_frequency_text"
+                        android:id="@+id/person_details_frequency"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/big_text_size" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/dummy_frequency_desc"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="@dimen/subheading_text_size" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:elevation="1dp"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+
+                <TextView
+                    android:id="@+id/month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/dummy_month"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textStyle="bold" />
+
+                <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/compactcalendar_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    app:compactCalendarBackgroundColor="@android:color/transparent"
+                    app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
+                    app:compactCalendarCurrentSelectedDayBackgroundColor="@android:color/transparent"
+                    app:compactCalendarMultiEventIndicatorColor="@color/colorAccent"
+                    app:compactCalendarTextColor="@color/colorTextPrimary"
+                    app:compactCalendarTextSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_margin">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/person_details_leaves_this_month"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:text="@string/dummy_leaves_this_month"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/big_text_size" />
+
+                        <TextView
+                            android:id="@+id/person_details_leaves_this_month_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/dummy_leaves_this_month_desc"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="@dimen/subheading_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/person_details_leaves_today"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:text="@string/dummy_leaves_today"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/big_text_size" />
+
+                        <TextView
+                            android:id="@+id/person_details_leaves_today_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/dummy_leaves_today_desc"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="@dimen/subheading_text_size" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="64dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

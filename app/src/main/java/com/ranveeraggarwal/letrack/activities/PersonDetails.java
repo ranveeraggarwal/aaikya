@@ -115,7 +115,23 @@ public class PersonDetails extends AppCompatActivity {
                 break;
         }
 
-        frequency.setText(Integer.toString(person.getFrequency()));
+        String frequencyText = "Once";
+        switch (person.getFrequency()) {
+            case 1:
+                frequencyText = "Once";
+                break;
+            case 2:
+                frequencyText = "Twice";
+                break;
+            case 3:
+                frequencyText = "Thrice";
+                break;
+            case 4:
+                frequencyText = "Four Times";
+                break;
+        }
+
+        frequency.setText(frequencyText);
 
         leavesToday.setText(todayLeaves+"");
         leavesThisMonth.setText(thisMonthLeaves+"");
@@ -186,18 +202,13 @@ public class PersonDetails extends AppCompatActivity {
             }
         });
 
-
-
         final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
-        
-        long something = getCurrentMonth();
-        Event event = new Event(getResources().getColor(R.color.colorAccent), something);
-        compactCalendar.addEvent(event);
+
 
         List<Leave> allLeaves = databaseAdapter.getLeavesForPerson(person.getId());
         for (int i=0; i<allLeaves.size(); i++) {
-            Event eventa = new Event(getResources().getColor(R.color.colorAccent), allLeaves.get(i).getDate());
-            compactCalendar.addEvent(eventa);
+            Event event = new Event(getResources().getColor(R.color.colorAccent), allLeaves.get(i).getDate());
+            compactCalendar.addEvent(event);
         }
 
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {

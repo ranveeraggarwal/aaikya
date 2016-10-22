@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Leave Tracker</string>
+    <string name="app_name">AaiKya: Leave Tracker</string>
     <string name="title_activity_settings">Settings</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
@@ -7,10 +7,17 @@
     <string name="dummy_text">Dummy Text</string>
     <string name="dummy_name">Dummy Name</string>
     <string name="dummy_occupation">Dummy Occupation</string>
-    <string name="dummy_frequency">2 times a day</string>
     <string name="add_leave">Add Leave</string>
     <string name="cancel_leave">Remove Leave</string>
     <string name="add_person">Add Person</string>
+    <string name="dummy_cycle">Cycle: 5th of every month</string>
+    <string name="dummy_frequency_text">Once</string>
+    <string name="dummy_frequency_desc">Per Day</string>
+    <string name="dummy_month">October, 2016</string>
+    <string name="dummy_leaves_this_month">3</string>
+    <string name="dummy_leaves_this_month_desc">Leaves this month</string>
+    <string name="dummy_leaves_today">1</string>
+    <string name="dummy_leaves_today_desc">Today</string>
 
     <string-array name="occupations_array">
         <item>Cook</item>

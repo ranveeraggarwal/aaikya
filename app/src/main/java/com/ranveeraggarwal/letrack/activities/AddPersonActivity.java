@@ -100,12 +100,15 @@ public class AddPersonActivity extends AppCompatActivity {
                 int checkedRadioButtonId = addPersonFrequencyGroup.getCheckedRadioButtonId();
                 addPersonFrequencyCheckedButton = (RadioButton) addPersonFrequencyGroup.findViewById(checkedRadioButtonId);
                 selectedFrequency = addPersonFrequencyCheckedButton.getText().toString();
-                long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), 5000);
-                if (id < 0) shortToastMaker(view.getContext(), "Operation unsuccessful");
-                else shortToastMaker(view.getContext(), "Person added successfully");
-                Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                if (selectedName.equals("")) {}
+                else {
+                    long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), 5000);
+                    if (id < 0) shortToastMaker(view.getContext(), "Operation unsuccessful");
+                    else shortToastMaker(view.getContext(), "Person added successfully");
+                    Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
@@ -137,12 +140,15 @@ public class AddPersonActivity extends AppCompatActivity {
             int checkedRadioButtonId = addPersonFrequencyGroup.getCheckedRadioButtonId();
             addPersonFrequencyCheckedButton = (RadioButton) addPersonFrequencyGroup.findViewById(checkedRadioButtonId);
             selectedFrequency = addPersonFrequencyCheckedButton.getText().toString();
-            long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), 5000);
-            if (id < 0) shortToastMaker(this, "Operation unsuccessful");
-            else shortToastMaker(this, "Person added successfully");
-            Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            if (selectedName.equals("")) {}
+            else {
+                long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), 5000);
+                if (id < 0) shortToastMaker(this, "Operation unsuccessful");
+                else shortToastMaker(this, "Person added successfully");
+                Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         return super.onOptionsItemSelected(menuItem);
