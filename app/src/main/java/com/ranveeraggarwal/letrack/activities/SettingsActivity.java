@@ -16,6 +16,7 @@ import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
 import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.composeEmail;
 
 public class SettingsActivity extends AppCompatPreferenceActivity{
 
@@ -45,8 +46,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
         addPreferencesFromResource(R.xml.settings_preferences);
 
         clearData = findPreference("DatabaseRefresh");
-        clearData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        contactUs = findPreference("ContactUs");
+        about = findPreference("About");
 
+        clearData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 confirmDatabaseRefresh();
@@ -54,6 +57,37 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
             }
         });
 
+        contactUs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                String[] devEmail = {"ranveerag2arwal@gmail.com"};
+                composeEmail(devEmail, "Hello!", preference.getContext());
+                return false;
+            }
+        });
+
+        about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                aboutDialog();
+                return false;
+            }
+        });
+    }
+
+    private void aboutDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("About");
+        builder.setMessage("This app was built as an 'Android Hello World' experiment by me, with the " +
+                "help of some of my friends. You can freely use this app for eternity, it'll never " +
+                "pivot to a paid app. Promise :)\n - Ranveer Aggarwal");
+        builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void confirmDatabaseRefresh() {
@@ -80,6 +114,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
@@ -93,6 +135,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home)
         {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             finish();
         }
         return super.onOptionsItemSelected(item);
