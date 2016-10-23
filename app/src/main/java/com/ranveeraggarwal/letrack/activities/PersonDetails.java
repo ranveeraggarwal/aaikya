@@ -52,6 +52,7 @@ public class PersonDetails extends AppCompatActivity {
 
     int leavesDayValue;
     int leavesMonthValue;
+    long currentDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,8 @@ public class PersonDetails extends AppCompatActivity {
 
         leavesDayValue = databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size();
         leavesMonthValue = databaseAdapter.getLeavesInRange(getCurrentMonth(), getCurrentMonthOffset(1), person.getId()).size();
+
+        currentDay = getCurrentDate();
 
         //Toolbar
         setSupportActionBar(toolbar);
@@ -114,15 +117,7 @@ public class PersonDetails extends AppCompatActivity {
         leavesMonthText.setText(String.format(Locale.ENGLISH, "%d", leavesMonthValue));
 
         // Setting current buttons
-        if (databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size() >= person.getFrequency())
-        {
-            addLeave.setEnabled(false);
-            addLeave.setTextColor(this.getResources().getColor(R.color.colorTextSecondary));
-        }
-        if (databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size() > 0) {
-            removeLeave.setEnabled(true);
-            removeLeave.setTextColor(this.getResources().getColor(R.color.colorPrimaryDark));
-        }
+        setButtons();
 
         // Calendar initialisation
         calendarView.shouldDrawIndicatorsBelowSelectedDays(true);
@@ -135,85 +130,102 @@ public class PersonDetails extends AppCompatActivity {
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-                List<Event> events = calendarView.getEvents(dateClicked);
-                //Log.d("Lol", "Day was clicked: " + dateClicked + " with events " + events);
-//                long timeInMillis = dateClicked.getTime();
-//                int leavesForTheDay = databaseAdapter.getLeavesForDate(timeInMillis, person.getId()).size();
-//                leavesDayText.setText(""+leavesForTheDay);
-//                leavesDayDesc.setText("On selected date");
+                currentDay = dateClicked.getTime();
+                refreshDayStats();
             }
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
 
                 monthText.setText(getMonthName(firstDayOfNewMonth.getMonth() + 1) + ", " + (firstDayOfNewMonth.getYear() + 1900));
-//                long startDate = firstDayOfNewMonth.getTime();
-//                long endDate = startDate + getCurrentMonthOffset(1) - getCurrentMonth();
-//                //Log.d("Lol", "Month was scrolled to: " + firstDayOfNewMonth);
-//                int leavesForTheMonth = databaseAdapter.getLeavesInRange(startDate, endDate, person.getId()).size();
-//                leavesMonthText.setText(""+leavesForTheMonth);
-//                leavesMonthDesc.setText("In selected month");
-//                int leavesForTheDay = databaseAdapter.getLeavesForDate(startDate, person.getId()).size();
-//                leavesDayText.setText(""+leavesForTheDay);
-//                leavesDayDesc.setText("On selected date");
+                //TODO: Make this work with different kinds of months.
+                long startDate = firstDayOfNewMonth.getTime();
+                long endDate = startDate + getCurrentMonthOffset(1) - getCurrentMonth();
+                currentDay = startDate;
+                refreshDayStats();
+                refreshMonthStats(startDate, endDate);
             }
         });
 
         addLeave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int currentLeaves = databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size();
+                int currentLeaves = databaseAdapter.getLeavesForDate(currentDay, person.getId()).size();
                 if (currentLeaves < person.getFrequency()){
-                    if (databaseAdapter.insertLeave(person.getId(), getCurrentDate(), currentLeaves+1) > 0){
-                        currentLeaves++;
+                    if (databaseAdapter.insertLeave(person.getId(), currentDay, currentLeaves+1) > 0){
                         leavesDayValue++;
                         leavesMonthValue++;
                         leavesDayText.setText(String.format(Locale.ENGLISH, "%d", leavesDayValue));
                         leavesMonthText.setText(String.format(Locale.ENGLISH, "%d", leavesMonthValue));
+                        Event event = new Event(getResources().getColor(R.color.colorPrimaryDark), currentDay);
+                        calendarView.addEvent(event, true);
                     }
                     else
                     {
                         shortToastMaker(v.getContext(), "Leave Not Added");
                     }
                 }
-                if (currentLeaves >= person.getFrequency())
-                {
-                    addLeave.setEnabled(false);
-                    addLeave.setTextColor(v.getContext().getResources().getColor(R.color.colorTextSecondary));
-                }
-                if (currentLeaves > 0) {
-                    removeLeave.setEnabled(true);
-                    removeLeave.setTextColor(v.getContext().getResources().getColor(R.color.colorPrimaryDark));
-                }
+                setButtons();
             }
         });
 
         removeLeave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int currentLeaves = databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size();
+                int currentLeaves = databaseAdapter.getLeavesForDate(currentDay, person.getId()).size();
                 if (currentLeaves > 0 ){
-                    if (databaseAdapter.deleteLeave(person.getId(), getCurrentDate(), currentLeaves) > 0) {
-                        currentLeaves--;
+                    if (databaseAdapter.deleteLeave(person.getId(), currentDay, currentLeaves) > 0) {
                         leavesDayValue--;
                         leavesMonthValue--;
                         leavesDayText.setText(String.format(Locale.ENGLISH, "%d", leavesDayValue));
                         leavesMonthText.setText(String.format(Locale.ENGLISH, "%d", leavesMonthValue));
+                        List<Event> events = calendarView.getEvents(currentDay);
+                        if (events.size() > 0) {
+                            events.remove(events.size() - 1);
+                            calendarView.invalidate();
+                        }
                     }
                     else {
                         shortToastMaker(v.getContext(), "Leave Not Removed");
                     }
                 }
-                if (currentLeaves == 0) {
-                    removeLeave.setEnabled(false);
-                    removeLeave.setTextColor(v.getContext().getResources().getColor(R.color.colorTextSecondary));
-                }
-                if (currentLeaves < person.getFrequency()) {
-                    addLeave.setEnabled(true);
-                    addLeave.setTextColor(v.getContext().getResources().getColor(R.color.colorPrimaryDark));
-                }
+                setButtons();
             }
         });
+    }
+
+    private void setButtons() {
+        int leaves = databaseAdapter.getLeavesForDate(currentDay, person.getId()).size();
+        int frequency = person.getFrequency();
+        if (leaves < frequency) {
+            addLeave.setEnabled(true);
+            addLeave.setTextColor(this.getResources().getColor(R.color.colorPrimaryDark));
+        } else {
+            addLeave.setEnabled(false);
+            addLeave.setTextColor(this.getResources().getColor(R.color.colorTextSecondary));
+        }
+        if (leaves > 0) {
+            removeLeave.setEnabled(true);
+            removeLeave.setTextColor(this.getResources().getColor(R.color.colorPrimaryDark));
+        } else {
+            removeLeave.setEnabled(false);
+            removeLeave.setTextColor(this.getResources().getColor(R.color.colorTextSecondary));
+        }
+    }
+
+    private void refreshDayStats() {
+        leavesDayValue = databaseAdapter.getLeavesForDate(currentDay, person.getId()).size();
+        leavesDayText.setText(String.format(Locale.ENGLISH, "%d", leavesDayValue));
+        if (currentDay == getCurrentDate()) {
+            leavesDayDesc.setText(R.string.today);
+        } else {
+            leavesDayDesc.setText(R.string.on_selected_day);
+        }
+    }
+
+    private void refreshMonthStats(long startDate, long endDate) {
+        leavesMonthValue = databaseAdapter.getLeavesInRange(startDate, endDate, person.getId()).size();
+        leavesMonthText.setText(String.format(Locale.ENGLISH, "%d", leavesMonthValue));
     }
 
     @Override
