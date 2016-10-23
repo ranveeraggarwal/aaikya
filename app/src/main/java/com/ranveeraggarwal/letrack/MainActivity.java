@@ -16,28 +16,21 @@ import com.ranveeraggarwal.letrack.activities.SettingsActivity;
 import com.ranveeraggarwal.letrack.adapters.PersonAdapter;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
-import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
-
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private FloatingActionButton addPersonFab;
-    private RecyclerView personList;
-
     private PersonAdapter personAdapter;
-    private DatabaseAdapter databaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseAdapter = new DatabaseAdapter(this);
+        DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
 
-        toolbar = (Toolbar) findViewById(R.id.details_app_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.details_app_bar);
         setSupportActionBar(toolbar);
 
-        addPersonFab = (FloatingActionButton)  findViewById(R.id.add_person_fab);
+        FloatingActionButton addPersonFab = (FloatingActionButton) findViewById(R.id.add_person_fab);
         addPersonFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddPersonActivity.class);
@@ -46,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        personList = (RecyclerView) findViewById(R.id.person_list);
+        RecyclerView personList = (RecyclerView) findViewById(R.id.person_list);
         personAdapter = new PersonAdapter(this, databaseAdapter.getPersonList());
         personList.setAdapter(personAdapter);
         personList.setLayoutManager(new LinearLayoutManager(this));

@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".activities.AddPersonActivity">
         </activity>
+        <activity android:name=".activities.EditPersonActivity">
+        </activity>
     </application>
 
 </manifest>

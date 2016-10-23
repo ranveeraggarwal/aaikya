@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="Settings"
         app:showAsAction="never"
         android:visible="true"/>
@@ -12,6 +12,13 @@
         android:orderInCategory="100"
         android:title="Add"
         android:icon="@drawable/ic_send_white_24dp"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_edit_person"
+        android:orderInCategory="200"
+        android:title="Edit"
+        android:icon="@drawable/ic_mode_edit_white_24dp"
         app:showAsAction="ifRoom"
         android:visible="false"/>
 </menu>

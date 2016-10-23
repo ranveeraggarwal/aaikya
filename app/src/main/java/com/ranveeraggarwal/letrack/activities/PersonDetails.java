@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+import com.ranveeraggarwal.letrack.MainActivity;
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.models.Leave;
 import com.ranveeraggarwal.letrack.models.Person;
@@ -233,6 +234,13 @@ public class PersonDetails extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem settingsItem = menu.findItem(R.id.action_settings);
+        settingsItem.setVisible(false);
+
+        MenuItem editItem = menu.findItem(R.id.action_edit_person);
+        editItem.setVisible(true);
+
         return true;
     }
 
@@ -245,7 +253,14 @@ public class PersonDetails extends AppCompatActivity {
             finish();
             return true;
         } else if (menuItem.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (menuItem.getItemId() == R.id.action_edit_person) {
+            Intent intent = new Intent(this, EditPersonActivity.class);
+            intent.putExtra("currentPerson", person);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(menuItem);
