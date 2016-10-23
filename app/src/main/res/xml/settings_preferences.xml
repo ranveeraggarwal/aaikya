@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Your Data">
+        <Preference android:title="Clear Data"
+            android:key="DatabaseRefresh"
+            android:summary="Clears up all the data of this app."/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Application">
+        <Preference android:title="Contact Us"
+            android:key="ContactUs"
+            android:summary="Contact the developers for bug or hugs."/>
+        <Preference android:title="About"
+            android:key="About"
+            android:summary="Know more about the application."/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -6,7 +6,7 @@
         android:orderInCategory="200"
         android:title="Settings"
         app:showAsAction="never"
-        android:visible="false"/>
+        android:visible="true"/>
     <item
         android:id="@+id/action_add_person"
         android:orderInCategory="100"

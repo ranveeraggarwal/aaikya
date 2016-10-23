@@ -13,17 +13,16 @@ import com.ranveeraggarwal.letrack.models.Person;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
-
-/**
- * Created by raagga on 18-10-2016.
- */
 
 public class DatabaseAdapter {
 
     private DatabaseHelper helper;
+    private Context context;
 
     public DatabaseAdapter(Context context) {
+        this.context = context;
         helper = new DatabaseHelper(context);
     }
 
@@ -55,7 +54,8 @@ public class DatabaseAdapter {
             db.close();
             return id;
         } catch (Exception e) {
-
+            shortToastMaker(context, "Person Insert Failed");
+            Log.e("DatabaseError", "Person Insert Failed");
         }
         return -1;
     }
@@ -83,7 +83,8 @@ public class DatabaseAdapter {
             cursor.close();
             db.close();
         } catch (Exception e) {
-
+            shortToastMaker(context, "Person List Fetch Failed");
+            Log.e("DatabaseError", "Person List Fetch Failed");
         }
         return allPeople;
     }
@@ -106,7 +107,8 @@ public class DatabaseAdapter {
             cursor.close();
             db.close();
         } catch (Exception e) {
-
+            shortToastMaker(context, "Person Leaves Get Failed");
+            Log.e("DatabaseError", "Person Leaves Get Failed");
         }
         return allDates;
     }
@@ -131,7 +133,8 @@ public class DatabaseAdapter {
             cursor.close();
             db.close();
         } catch (Exception e) {
-
+            shortToastMaker(context, "Person Leaves Range Failed");
+            Log.e("DatabaseError", "Person Leaves Range Failed");
         }
         return allDates;
     }
@@ -155,25 +158,10 @@ public class DatabaseAdapter {
             cursor.close();
             db.close();
         } catch (Exception e) {
-
+            shortToastMaker(context, "Person Leaves Date Failed");
+            Log.e("DatabaseError", "Person Leaves Date Failed");
         }
         return allDates;
-    }
-
-    public boolean checkLeave(long date, int fno, long pid) {
-        SQLiteDatabase db = helper.getWritableDatabase();
-        String selectString = "SELECT * FROM " + DatabaseHelper.LEAVES_TABLE + " WHERE " + DatabaseHelper.L_DATE + " = " + date
-                + " AND " + DatabaseHelper.L_FNO + " = " + fno
-                + " AND " + DatabaseHelper.L_PID + " = " + pid + ";";
-        Cursor cursor = db.rawQuery(selectString, null);
-        if (cursor.getCount() <= 0) {
-            cursor.close();
-            db.close();
-            return false;
-        }
-        cursor.close();
-        db.close();
-        return true;
     }
 
     public long insertLeave(long pid, long date, int fno) {
@@ -184,7 +172,8 @@ public class DatabaseAdapter {
             db.close();
             return id;
         } catch (Exception e) {
-
+            shortToastMaker(context, "Leave Insert Failed");
+            Log.e("DatabaseError", "Leave Insert Failed");
         }
         return -1;
     }
@@ -193,13 +182,26 @@ public class DatabaseAdapter {
         try {
             SQLiteDatabase db = helper.getWritableDatabase();
             String[] whereArgs = {pid+"", date+"", fno+""};
-            int count = db.delete(helper.LEAVES_TABLE, helper.L_PID+"=? AND "+helper.L_DATE + "=? AND " + helper.L_FNO + "=?", whereArgs);
+            int count = db.delete(DatabaseHelper.LEAVES_TABLE, DatabaseHelper.L_PID+"=? AND "+DatabaseHelper.L_DATE + "=? AND " + DatabaseHelper.L_FNO + "=?", whereArgs);
             db.close();
             return count;
         } catch (Exception e) {
-
+            shortToastMaker(context, "Leave Delete Failed");
+            Log.e("DatabaseError", "Leave Delete Failed");
         }
         return 0;
+    }
+
+    public void refreshDatabase() {
+        try {
+            SQLiteDatabase db = helper.getWritableDatabase();
+            db.execSQL("DROP TABLE IF EXISTS " + DatabaseHelper.LEAVES_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DatabaseHelper.PERSON_TABLE);
+            helper.onCreate(db);
+        } catch (Exception e) {
+            shortToastMaker(context, "Database Refresh Failed");
+            Log.e("DatabaseError", "Database Refresh Failed");
+        }
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -223,11 +225,8 @@ public class DatabaseAdapter {
         private static final String L_DATE = "date";
         private static final String L_FNO = "f_no";
 
-        private Context context;
-
         private DatabaseHelper(Context context) {
             super(context, DATABASE, null, DATABASE_VERSION);
-            this.context = context;
         }
 
         @Override

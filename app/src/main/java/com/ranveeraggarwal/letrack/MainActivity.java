@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         if (menuItem.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-            shortToastMaker(this, "Setting will be implemented soon :)");
+            finish();
             return true;
         }
 

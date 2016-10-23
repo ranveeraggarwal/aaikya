@@ -132,6 +132,7 @@ public class PersonDetails extends AppCompatActivity {
             public void onDayClick(Date dateClicked) {
                 currentDay = dateClicked.getTime();
                 refreshDayStats();
+                setButtons();
             }
 
             @Override
@@ -144,6 +145,7 @@ public class PersonDetails extends AppCompatActivity {
                 currentDay = startDate;
                 refreshDayStats();
                 refreshMonthStats(startDate, endDate);
+                setButtons();
             }
         });
 
@@ -240,6 +242,7 @@ public class PersonDetails extends AppCompatActivity {
         if (menuItem.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
+            finish();
             return true;
         } else if (menuItem.getItemId() == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
