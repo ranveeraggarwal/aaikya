@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.details_app_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Leave Tracker");
 
         FloatingActionButton addPersonFab = (FloatingActionButton) findViewById(R.id.add_person_fab);
         addPersonFab.setOnClickListener(new View.OnClickListener() {
