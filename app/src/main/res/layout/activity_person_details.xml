@@ -10,37 +10,6 @@
         android:id="@+id/details_app_bar"
         layout="@layout/app_bar" />
 
-    <LinearLayout
-        style="@style/card_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layout_marginBottom="0dp"
-        android:padding="0dp">
-
-        <Button
-            style="?attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:text="@string/add_leave"
-            android:textColor="@color/colorPrimaryDark"
-            android:id="@+id/details_add_leave" />
-
-        <Button
-            style="?attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
-            android:text="@string/cancel_leave"
-            android:enabled="false"
-            android:textColor="@color/colorTextSecondary"
-            android:id="@+id/details_remove_leave"/>
-    </LinearLayout>
-
     <ScrollView
         android:id="@+id/details_content"
         android:layout_below="@id/details_app_bar"
@@ -228,4 +197,34 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        style="@style/card_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        android:padding="0dp">
+
+        <Button
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/add_leave"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/details_add_leave" />
+
+        <Button
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/cancel_leave"
+            android:enabled="false"
+            android:textColor="@color/colorTextSecondary"
+            android:id="@+id/details_remove_leave"/>
+    </LinearLayout>
 </RelativeLayout>
