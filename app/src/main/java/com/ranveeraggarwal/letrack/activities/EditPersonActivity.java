@@ -114,7 +114,8 @@ public class EditPersonActivity extends AppCompatActivity {
                     int count = databaseAdapter.updatePerson(person);
                     if (count < 0) shortToastMaker(view.getContext(), "Operation unsuccessful");
                     else shortToastMaker(view.getContext(), "Person edited successfully");
-                    Intent intent = new Intent(EditPersonActivity.this, MainActivity.class);
+                    Intent intent = new Intent(EditPersonActivity.this, PersonDetails.class);
+                    intent.putExtra("currentPerson", person);
                     startActivity(intent);
                     finish();
                 }
@@ -181,7 +182,8 @@ public class EditPersonActivity extends AppCompatActivity {
                 int count = databaseAdapter.updatePerson(person);
                 if (count < 0) shortToastMaker(this, "Operation unsuccessful");
                 else shortToastMaker(this, "Person edited successfully");
-                Intent intent = new Intent(EditPersonActivity.this, MainActivity.class);
+                Intent intent = new Intent(EditPersonActivity.this, PersonDetails.class);
+                intent.putExtra("currentPerson", person);
                 startActivity(intent);
                 finish();
             }
