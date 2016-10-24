@@ -10,11 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.ranveeraggarwal.letrack.activities.AddPersonActivity;
 import com.ranveeraggarwal.letrack.activities.SettingsActivity;
 import com.ranveeraggarwal.letrack.adapters.PersonAdapter;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,10 +43,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageView placeholderImage = (ImageView) findViewById(R.id.placeholder_image);
+
         RecyclerView personList = (RecyclerView) findViewById(R.id.person_list);
         personAdapter = new PersonAdapter(this, databaseAdapter.getPersonList());
         personList.setAdapter(personAdapter);
         personList.setLayoutManager(new LinearLayoutManager(this));
+
+        int personCount = databaseAdapter.getPersonList().size();
+        if (personCount > 0) {
+            personList.setVisibility(VISIBLE);
+            placeholderImage.setVisibility(GONE);
+        } else {
+            personList.setVisibility(GONE);
+            placeholderImage.setVisibility(VISIBLE);
+        }
 
     }
 

@@ -89,6 +89,22 @@ public class DatabaseAdapter {
         return allPeople;
     }
 
+    public int updatePerson(Person updatedPerson) {
+        try {
+            SQLiteDatabase db = helper.getWritableDatabase();
+            ContentValues contentValues = getPersonContentValues(updatedPerson.getName(), updatedPerson.getOccupation(),
+                    updatedPerson.getFrequency(), updatedPerson.getStartDate(), updatedPerson.getSalary());
+            String[] whereArgs = {Long.toString(updatedPerson.getId())};
+            int count = db.update(DatabaseHelper.PERSON_TABLE, contentValues, DatabaseHelper.P_ID + "=? ", whereArgs);
+            db.close();
+            return count;
+        } catch (Exception e) {
+            shortToastMaker(context, "Couldn't Update Person");
+            Log.e("DatabaseError", "Couldn't Update Person");
+        }
+        return 0;
+    }
+
     public List<Leave> getLeavesForPerson(long pid) {
         SQLiteDatabase db = helper.getWritableDatabase();
         List<Leave> allDates = new ArrayList<>();

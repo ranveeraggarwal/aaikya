@@ -31,6 +31,7 @@
     <string name="frequency_field_helper">(Times a day)</string>
     <string name="today">Today</string>
     <string name="on_selected_day">On Selected day</string>
+    <string name="confirm">Confirm</string>
     <string-array name="occupations_array">
         <item>Cook</item>
         <item>Maid</item>

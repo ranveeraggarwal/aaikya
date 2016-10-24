@@ -11,6 +11,17 @@
         android:id="@+id/details_app_bar"
         layout="@layout/app_bar" />
 
+    <ImageView
+        android:id="@+id/placeholder_image"
+        app:srcCompat="@drawable/human_greeting"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:visibility="gone"
+        android:scaleType="center"
+        android:tint="@color/colorPrimaryLight"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/person_list"
         android:layout_width="match_parent"

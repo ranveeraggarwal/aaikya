@@ -25,7 +25,7 @@ public class AddPersonActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView nameField;
-    Spinner occupationField;
+    TextView occupationField;
     TextView salaryField;
     Button submitButton;
     RadioGroup frequencyFieldGroup;
@@ -54,23 +54,7 @@ public class AddPersonActivity extends AppCompatActivity {
 
         nameField = (TextView) findViewById(R.id.name_field);
 
-        occupationField = (Spinner) findViewById(R.id.occupation_field);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.occupations_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        occupationField.setAdapter(adapter);
-        occupationField.setSelection(0);
-        selectedOccupation = occupationField.getSelectedItem().toString();
-        occupationField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedOccupation = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        occupationField = (TextView) findViewById(R.id.occupation_field);
 
         frequencyFieldGroup = (RadioGroup) findViewById(R.id.frequency_field);
 
@@ -82,6 +66,8 @@ public class AddPersonActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedName = nameField.getText().toString();
 
+                selectedOccupation = occupationField.getText().toString();
+
                 int checkedRadioButtonId = frequencyFieldGroup.getCheckedRadioButtonId();
                 frequencyField = (RadioButton) frequencyFieldGroup.findViewById(checkedRadioButtonId);
                 selectedFrequency = frequencyField.getText().toString();
@@ -90,6 +76,8 @@ public class AddPersonActivity extends AppCompatActivity {
 
                 if (selectedName.equals("")) {
                     shortToastMaker(view.getContext(), "Name cannot be empty!");
+                } else if (selectedOccupation.equals("")) {
+                    shortToastMaker(view.getContext(), "Occupation cannot be empty!");
                 } else if (selectedSalary.equals("")) {
                     shortToastMaker(view.getContext(), "Salary cannot be empty!");
                 } else {
@@ -138,6 +126,8 @@ public class AddPersonActivity extends AppCompatActivity {
         } else if (menuItem.getItemId() == R.id.action_add_person) {
             selectedName = nameField.getText().toString();
 
+            selectedOccupation = occupationField.getText().toString();
+
             int checkedRadioButtonId = frequencyFieldGroup.getCheckedRadioButtonId();
             frequencyField = (RadioButton) frequencyFieldGroup.findViewById(checkedRadioButtonId);
             selectedFrequency = frequencyField.getText().toString();
@@ -146,6 +136,8 @@ public class AddPersonActivity extends AppCompatActivity {
 
             if (selectedName.equals("")) {
                 shortToastMaker(this, "Name cannot be empty!");
+            } else if (selectedOccupation.equals("")) {
+                shortToastMaker(this, "Occupation cannot be empty!");
             } else if (selectedSalary.equals("")) {
                 shortToastMaker(this, "Salary cannot be empty!");
             } else {

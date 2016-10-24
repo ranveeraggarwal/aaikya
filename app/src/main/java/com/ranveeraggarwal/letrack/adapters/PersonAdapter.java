@@ -1,5 +1,6 @@
 package com.ranveeraggarwal.letrack.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -118,6 +119,7 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
                 Intent intent = new Intent(context, PersonDetails.class);
                 intent.putExtra("currentPerson", currentPerson);
                 context.startActivity(intent);
+                ((Activity)context).finish();
             }
         });
     }
