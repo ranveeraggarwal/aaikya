@@ -12,7 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.ranveeraggarwal.letrack.MainActivity;
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.models.Person;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;

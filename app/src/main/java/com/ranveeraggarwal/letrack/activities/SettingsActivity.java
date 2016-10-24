@@ -2,14 +2,15 @@ package com.ranveeraggarwal.letrack.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.ranveeraggarwal.letrack.MainActivity;
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
@@ -50,6 +51,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 confirmDatabaseRefresh();
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+                SharedPreferences.Editor editor = getPrefs.edit();
+                editor.putBoolean("firstRun", true);
+                editor.apply();
                 return false;
             }
         });

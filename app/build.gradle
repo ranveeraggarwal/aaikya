@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral()
+}
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
@@ -31,5 +35,6 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:support-vector-drawable:24.2.1'
     compile 'com.github.sundeepk:compact-calendar-view:1.9.3'
+    compile 'com.github.paolorotolo:appintro:4.1.0'
     testCompile 'junit:junit:4.12'
 }

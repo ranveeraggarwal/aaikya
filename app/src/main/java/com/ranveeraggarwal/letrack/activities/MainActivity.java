@@ -1,7 +1,9 @@
-package com.ranveeraggarwal.letrack;
+package com.ranveeraggarwal.letrack.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.ranveeraggarwal.letrack.activities.AddPersonActivity;
-import com.ranveeraggarwal.letrack.activities.SettingsActivity;
+import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.adapters.PersonAdapter;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
@@ -28,6 +29,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                boolean isFirstStart = getPrefs.getBoolean("firstRun", true);
+                if (isFirstStart) {
+                    SharedPreferences.Editor editor = getPrefs.edit();
+                    editor.putBoolean("firstRun", false);
+                    editor.apply();
+
+                    Intent i = new Intent(MainActivity.this, IntroActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
+        });
+        t.start();
 
         DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
 

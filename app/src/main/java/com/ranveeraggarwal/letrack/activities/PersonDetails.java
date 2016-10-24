@@ -1,7 +1,6 @@
 package com.ranveeraggarwal.letrack.activities;
 
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
-import com.ranveeraggarwal.letrack.MainActivity;
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.models.Leave;
 import com.ranveeraggarwal.letrack.models.Person;
