@@ -123,7 +123,7 @@ public class PersonDetails extends AppCompatActivity {
         // Calendar initialisation
         calendarView.shouldDrawIndicatorsBelowSelectedDays(true);
         List<Leave> allLeaves = databaseAdapter.getLeavesForPerson(person.getId());
-        for (int i=0; i<allLeaves.size(); i++) {
+        for (int i = 0; i < allLeaves.size(); i++) {
             Event event = new Event(getResources().getColor(R.color.colorPrimaryDark), allLeaves.get(i).getDate());
             calendarView.addEvent(event);
         }
@@ -154,17 +154,15 @@ public class PersonDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int currentLeaves = databaseAdapter.getLeavesForDate(currentDay, person.getId()).size();
-                if (currentLeaves < person.getFrequency()){
-                    if (databaseAdapter.insertLeave(person.getId(), currentDay, currentLeaves+1) > 0){
+                if (currentLeaves < person.getFrequency()) {
+                    if (databaseAdapter.insertLeave(person.getId(), currentDay, currentLeaves + 1) > 0) {
                         leavesDayValue++;
                         leavesMonthValue++;
                         leavesDayText.setText(String.format(Locale.ENGLISH, "%d", leavesDayValue));
                         leavesMonthText.setText(String.format(Locale.ENGLISH, "%d", leavesMonthValue));
                         Event event = new Event(getResources().getColor(R.color.colorPrimaryDark), currentDay);
                         calendarView.addEvent(event, true);
-                    }
-                    else
-                    {
+                    } else {
                         shortToastMaker(v.getContext(), "Leave Not Added");
                     }
                 }
@@ -176,7 +174,7 @@ public class PersonDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int currentLeaves = databaseAdapter.getLeavesForDate(currentDay, person.getId()).size();
-                if (currentLeaves > 0 ){
+                if (currentLeaves > 0) {
                     if (databaseAdapter.deleteLeave(person.getId(), currentDay, currentLeaves) > 0) {
                         leavesDayValue--;
                         leavesMonthValue--;
@@ -187,8 +185,7 @@ public class PersonDetails extends AppCompatActivity {
                             events.remove(events.size() - 1);
                             calendarView.invalidate();
                         }
-                    }
-                    else {
+                    } else {
                         shortToastMaker(v.getContext(), "Leave Not Removed");
                     }
                 }
@@ -253,8 +250,7 @@ public class PersonDetails extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem)
-    {
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);

@@ -20,7 +20,8 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:visibility="gone"
         android:scaleType="center"
-        android:tint="@color/colorPrimaryLight"/>
+        android:tint="@color/colorPrimaryLight"
+        android:contentDescription="@string/placeholder" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/person_list"

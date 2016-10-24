@@ -2,11 +2,9 @@ package com.ranveeraggarwal.letrack.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,10 +13,9 @@ import com.ranveeraggarwal.letrack.MainActivity;
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
-import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.composeEmail;
 
-public class SettingsActivity extends AppCompatPreferenceActivity{
+public class SettingsActivity extends AppCompatPreferenceActivity {
 
     Toolbar toolbar;
     Preference clearData;
@@ -133,8 +130,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

@@ -32,6 +32,10 @@
     <string name="today">Today</string>
     <string name="on_selected_day">On Selected day</string>
     <string name="confirm">Confirm</string>
+    <string name="occupation_field_example">eg Cook, House Help etc.</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="add">ADD</string>
+    <string name="remove">Remove</string>
     <string-array name="occupations_array">
         <item>Cook</item>
         <item>Maid</item>

@@ -64,7 +64,7 @@ public class DatabaseAdapter {
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {DatabaseHelper.P_ID, DatabaseHelper.P_NAME, DatabaseHelper.P_OCCUPATION, DatabaseHelper.P_FREQUENCY, DatabaseHelper.P_STARTDATE, DatabaseHelper.P_SALARY};
         List<Person> allPeople = new ArrayList<>();
-        try  {
+        try {
             Cursor cursor = db.query(DatabaseHelper.PERSON_TABLE, columns, null, null, null, null, null);
             allPeople = new ArrayList<>();
             while (cursor.moveToNext()) {
@@ -136,14 +136,14 @@ public class DatabaseAdapter {
         try {
             String selectQuery = "SELECT * FROM " + DatabaseHelper.LEAVES_TABLE + " WHERE "
                     + DatabaseHelper.L_PID + "=" + pid + " AND " + DatabaseHelper.L_DATE
-                    + " BETWEEN "+ startDate +" AND " + endDate + ";";
+                    + " BETWEEN " + startDate + " AND " + endDate + ";";
             Cursor cursor = db.rawQuery(selectQuery, null);
             while (cursor.moveToNext()) {
                 Leave leave = new Leave(
                         pid,
                         cursor.getLong(cursor.getColumnIndex(DatabaseHelper.L_DATE)),
                         cursor.getInt(cursor.getColumnIndex(DatabaseHelper.L_FNO))
-                        );
+                );
                 allDates.add(leave);
             }
             cursor.close();
@@ -161,7 +161,7 @@ public class DatabaseAdapter {
         try {
             String selectQuery = "SELECT * FROM " + DatabaseHelper.LEAVES_TABLE + " WHERE "
                     + DatabaseHelper.L_PID + "=" + pid + " AND " + DatabaseHelper.L_DATE
-                    + "="+ date+ ";";
+                    + "=" + date + ";";
             Cursor cursor = db.rawQuery(selectQuery, null);
             while (cursor.moveToNext()) {
                 Leave leave = new Leave(
@@ -197,8 +197,8 @@ public class DatabaseAdapter {
     public int deleteLeave(long pid, long date, int fno) {
         try {
             SQLiteDatabase db = helper.getWritableDatabase();
-            String[] whereArgs = {pid+"", date+"", fno+""};
-            int count = db.delete(DatabaseHelper.LEAVES_TABLE, DatabaseHelper.L_PID+"=? AND "+DatabaseHelper.L_DATE + "=? AND " + DatabaseHelper.L_FNO + "=?", whereArgs);
+            String[] whereArgs = {pid + "", date + "", fno + ""};
+            int count = db.delete(DatabaseHelper.LEAVES_TABLE, DatabaseHelper.L_PID + "=? AND " + DatabaseHelper.L_DATE + "=? AND " + DatabaseHelper.L_FNO + "=?", whereArgs);
             db.close();
             return count;
         } catch (Exception e) {

@@ -6,10 +6,6 @@ import android.net.Uri;
 
 import java.util.Calendar;
 
-/**
- * Created by raagga on 21-10-2016.
- */
-
 public class Utilities {
 
     public static long getCurrentMonth() {

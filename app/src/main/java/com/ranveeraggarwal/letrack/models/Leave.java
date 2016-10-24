@@ -1,9 +1,5 @@
 package com.ranveeraggarwal.letrack.models;
 
-/**
- * Created by ranveer on 18/10/16.
- */
-
 public class Leave {
     public long getDate() {
         return date;

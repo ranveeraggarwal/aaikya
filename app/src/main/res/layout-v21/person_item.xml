@@ -78,7 +78,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
-                    android:text="ADD"
+                    android:text="@string/add"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <Button
@@ -87,7 +87,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
-                    android:text="Remove"
+                    android:text="@string/remove"
                     android:textColor="@color/colorTextSecondary" />
             </LinearLayout>
 

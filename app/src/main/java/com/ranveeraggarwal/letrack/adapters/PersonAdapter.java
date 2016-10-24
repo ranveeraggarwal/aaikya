@@ -20,11 +20,8 @@ import java.util.List;
 import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
 
-/**
- * Created by raagga on 10-10-2016.
- */
 
-public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
+public class PersonAdapter extends RecyclerView.Adapter<PersonViewHolder> {
 
     private LayoutInflater personInflater;
 
@@ -34,7 +31,7 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
 
     private DatabaseAdapter databaseAdapter;
 
-    public PersonAdapter (Context context, List<Person> data) {
+    public PersonAdapter(Context context, List<Person> data) {
         personInflater = LayoutInflater.from(context);
         this.data = data;
         this.context = context;
@@ -55,13 +52,11 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
         holder.setOccupation(currentPerson.getOccupation());
         holder.setFrequency(currentPerson.getFrequency());
         holder.setLeaves(currentPerson.getLeaves());
-        if (currentPerson.getLeaves() >= currentPerson.getFrequency())
-        {
+        if (currentPerson.getLeaves() >= currentPerson.getFrequency()) {
             holder.addLeave.setEnabled(false);
             holder.addLeave.setTextColor(context.getResources().getColor(R.color.colorTextSecondary));
         }
-        if (currentPerson.getLeaves() > 0)
-        {
+        if (currentPerson.getLeaves() > 0) {
             holder.cancelLeave.setEnabled(true);
             holder.cancelLeave.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
         }
@@ -69,18 +64,15 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
             @Override
             public void onClick(View view) {
                 int currentLeaves = databaseAdapter.getLeavesForDate(getCurrentDate(), currentPerson.getId()).size();
-                if (currentLeaves < currentPerson.getFrequency()){
-                    if (databaseAdapter.insertLeave(currentPerson.getId(), getCurrentDate(), currentLeaves+1) > 0){
+                if (currentLeaves < currentPerson.getFrequency()) {
+                    if (databaseAdapter.insertLeave(currentPerson.getId(), getCurrentDate(), currentLeaves + 1) > 0) {
                         currentLeaves++;
                         holder.setLeaves(currentLeaves);
-                    }
-                    else
-                    {
+                    } else {
                         shortToastMaker(context, "Leave Not Added");
                     }
                 }
-                if (currentLeaves >= currentPerson.getFrequency())
-                {
+                if (currentLeaves >= currentPerson.getFrequency()) {
                     holder.addLeave.setEnabled(false);
                     holder.addLeave.setTextColor(context.getResources().getColor(R.color.colorTextSecondary));
                 }
@@ -94,12 +86,11 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
             @Override
             public void onClick(View view) {
                 int currentLeaves = databaseAdapter.getLeavesForDate(getCurrentDate(), currentPerson.getId()).size();
-                if (currentLeaves > 0 ){
+                if (currentLeaves > 0) {
                     if (databaseAdapter.deleteLeave(currentPerson.getId(), getCurrentDate(), currentLeaves) > 0) {
                         currentLeaves--;
                         holder.setLeaves(currentLeaves);
-                    }
-                    else {
+                    } else {
                         shortToastMaker(context, "Leave Not Removed");
                     }
                 }
@@ -119,7 +110,7 @@ public class PersonAdapter extends RecyclerView.Adapter <PersonViewHolder>{
                 Intent intent = new Intent(context, PersonDetails.class);
                 intent.putExtra("currentPerson", currentPerson);
                 context.startActivity(intent);
-                ((Activity)context).finish();
+                ((Activity) context).finish();
             }
         });
     }
