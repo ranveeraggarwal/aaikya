@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
+import android.support.v7.widget.AppCompatSpinner;
 import android.widget.TextView;
 
 import com.ranveeraggarwal.letrack.R;
@@ -29,7 +29,7 @@ public class AddPersonActivity extends AppCompatActivity {
     Button submitButton;
     RadioGroup frequencyFieldGroup;
     RadioButton frequencyField;
-    Spinner startDateField;
+    AppCompatSpinner startDateField;
 
     String selectedName;
     String selectedOccupation;
@@ -61,7 +61,7 @@ public class AddPersonActivity extends AppCompatActivity {
 
         salaryField = (TextView) findViewById(R.id.salary_field);
 
-        startDateField = (Spinner) findViewById(R.id.start_date_field);
+        startDateField = (AppCompatSpinner) findViewById(R.id.start_date_field);
         ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter.createFromResource(this,
                 R.array.date_array, android.R.layout.simple_spinner_item);
         dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
