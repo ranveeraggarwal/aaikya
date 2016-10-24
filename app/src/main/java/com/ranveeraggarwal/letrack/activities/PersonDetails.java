@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,14 +18,18 @@ import com.ranveeraggarwal.letrack.models.Leave;
 import com.ranveeraggarwal.letrack.models.Person;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.addDays;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.addMonths;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentMonth;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentMonthOffset;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.getMonth;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getMonthName;
 
 public class PersonDetails extends AppCompatActivity {
@@ -36,6 +41,7 @@ public class PersonDetails extends AppCompatActivity {
     TextView monthText;
     TextView occupationText;
     TextView frequencyText;
+    TextView startDateText;
 
     TextView leavesDayText;
     TextView leavesMonthText;
@@ -52,6 +58,7 @@ public class PersonDetails extends AppCompatActivity {
     int leavesDayValue;
     int leavesMonthValue;
     long currentDay;
+    long currentMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,7 @@ public class PersonDetails extends AppCompatActivity {
         monthText = (TextView) findViewById(R.id.month_text);
         occupationText = (TextView) findViewById(R.id.occupation_text);
         frequencyText = (TextView) findViewById(R.id.frequency_text);
+        startDateText = (TextView) findViewById(R.id.start_day_text);
         leavesDayText = (TextView) findViewById(R.id.leaves_day_text);
         leavesMonthText = (TextView) findViewById(R.id.leaves_month_text);
         leavesDayDesc = (TextView) findViewById(R.id.leaves_day_desc);
@@ -78,11 +86,13 @@ public class PersonDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         person = (Person) intent.getSerializableExtra("currentPerson");
-
-        leavesDayValue = databaseAdapter.getLeavesForDate(getCurrentDate(), person.getId()).size();
-        leavesMonthValue = databaseAdapter.getLeavesInRange(getCurrentMonth(), getCurrentMonthOffset(1), person.getId()).size();
+        person.setStartDate(person.getStartDate());
 
         currentDay = getCurrentDate();
+        currentMonth = addDays(getCurrentMonth(), person.getStartDate());
+
+        leavesDayValue = databaseAdapter.getLeavesForDate(currentDay, person.getId()).size();
+        leavesMonthValue = databaseAdapter.getLeavesInRange(currentMonth, addMonths(currentMonth, 1), person.getId()).size();
 
         //Toolbar
         setSupportActionBar(toolbar);
@@ -93,6 +103,33 @@ public class PersonDetails extends AppCompatActivity {
 
         // Setting UI elements to current value
         occupationText.setText(person.getOccupation());
+
+        switch (person.getStartDate()){
+            case 1:
+                startDateText.setText("Cycle: 1st of every month");
+                break;
+            case 21:
+                startDateText.setText("Cycle: 21st of every month");
+                break;
+            case 31:
+                startDateText.setText("Cycle: 31st of every month");
+                break;
+            case 2:
+                startDateText.setText("Cycle: 2nd of every month");
+                break;
+            case 22:
+                startDateText.setText("Cycle: 22nd of every month");
+                break;
+            case 3:
+                startDateText.setText("Cycle: 3rd of every month");
+                break;
+            case 23:
+                startDateText.setText("Cycle: 23rd of every month");
+                break;
+            default:
+                startDateText.setText("Cycle: " + person.getStartDate() + "th of every month");
+                break;
+        }
 
         String frequencyText = "Once";
         switch (person.getFrequency()) {
@@ -114,6 +151,10 @@ public class PersonDetails extends AppCompatActivity {
 
         leavesDayText.setText(String.format(Locale.ENGLISH, "%d", leavesDayValue));
         leavesMonthText.setText(String.format(Locale.ENGLISH, "%d", leavesMonthValue));
+
+        leavesMonthDesc.setText(String.format(Locale.ENGLISH, "%d %s - %d %s",
+                person.getStartDate(), getMonthName(getMonth(currentDay)).substring(0, 3), person.getStartDate(),
+                getMonthName(getMonth(currentDay) + 1).substring(0, 3)));
 
         // Setting current buttons
         setButtons();
@@ -138,12 +179,15 @@ public class PersonDetails extends AppCompatActivity {
             public void onMonthScroll(Date firstDayOfNewMonth) {
 
                 monthText.setText(getMonthName(firstDayOfNewMonth.getMonth() + 1) + ", " + (firstDayOfNewMonth.getYear() + 1900));
-                //TODO: Make this work with different kinds of months.
                 long startDate = firstDayOfNewMonth.getTime();
-                long endDate = startDate + getCurrentMonthOffset(1) - getCurrentMonth();
+                if (startDate < currentMonth) {
+                    currentMonth = addMonths(currentMonth, -1);
+                } else if (startDate > currentMonth) {
+                    currentMonth = addMonths(currentMonth, 1);
+                }
                 currentDay = startDate;
                 refreshDayStats();
-                refreshMonthStats(startDate, endDate);
+                refreshMonthStats();
                 setButtons();
             }
         });
@@ -164,6 +208,7 @@ public class PersonDetails extends AppCompatActivity {
                         shortToastMaker(v.getContext(), "Leave Not Added");
                     }
                 }
+                refreshMonthStats();
                 setButtons();
             }
         });
@@ -187,6 +232,7 @@ public class PersonDetails extends AppCompatActivity {
                         shortToastMaker(v.getContext(), "Leave Not Removed");
                     }
                 }
+                refreshMonthStats();
                 setButtons();
             }
         });
@@ -221,9 +267,12 @@ public class PersonDetails extends AppCompatActivity {
         }
     }
 
-    private void refreshMonthStats(long startDate, long endDate) {
-        leavesMonthValue = databaseAdapter.getLeavesInRange(startDate, endDate, person.getId()).size();
+    private void refreshMonthStats() {
+        leavesMonthValue = databaseAdapter.getLeavesInRange(currentMonth, addMonths(currentMonth, 1), person.getId()).size();
         leavesMonthText.setText(String.format(Locale.ENGLISH, "%d", leavesMonthValue));
+        leavesMonthDesc.setText(String.format(Locale.ENGLISH, "%d %s - %d %s",
+                person.getStartDate(), getMonthName(getMonth(currentDay)).substring(0, 3), person.getStartDate(),
+                getMonthName(getMonth(currentDay) + 1).substring(0, 3)));
     }
 
     @Override

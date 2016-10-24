@@ -7,9 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ranveeraggarwal.letrack.R;
@@ -26,11 +29,13 @@ public class AddPersonActivity extends AppCompatActivity {
     Button submitButton;
     RadioGroup frequencyFieldGroup;
     RadioButton frequencyField;
+    Spinner startDateField;
 
     String selectedName;
     String selectedOccupation;
     String selectedSalary;
     String selectedFrequency;
+    String selectedStartDate;
 
     DatabaseAdapter databaseAdapter;
 
@@ -56,6 +61,24 @@ public class AddPersonActivity extends AppCompatActivity {
 
         salaryField = (TextView) findViewById(R.id.salary_field);
 
+        startDateField = (Spinner) findViewById(R.id.start_date_field);
+        ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter.createFromResource(this,
+                R.array.date_array, android.R.layout.simple_spinner_item);
+        dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        startDateField.setAdapter(dateAdapter);
+        startDateField.setSelection(0);
+        selectedStartDate = startDateField.getSelectedItem().toString();
+        startDateField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedStartDate = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         submitButton = (Button) findViewById(R.id.submit_button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +100,7 @@ public class AddPersonActivity extends AppCompatActivity {
                 } else if (selectedSalary.equals("")) {
                     shortToastMaker(view.getContext(), "Salary cannot be empty!");
                 } else {
-                    long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), 1, Integer.parseInt(selectedSalary));
+                    long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), Integer.parseInt(selectedSalary));
                     if (id < 0) shortToastMaker(view.getContext(), "Operation unsuccessful");
                     else shortToastMaker(view.getContext(), "Person added successfully");
                     Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
@@ -137,7 +160,7 @@ public class AddPersonActivity extends AppCompatActivity {
             } else if (selectedSalary.equals("")) {
                 shortToastMaker(this, "Salary cannot be empty!");
             } else {
-                long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), 1, Integer.parseInt(selectedSalary));
+                long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), Integer.parseInt(selectedSalary));
                 if (id < 0) shortToastMaker(this, "Operation unsuccessful");
                 else shortToastMaker(this, "Person added successfully");
                 Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);

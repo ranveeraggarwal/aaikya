@@ -36,6 +36,7 @@
     <string name="placeholder">Placeholder</string>
     <string name="add">ADD</string>
     <string name="remove">Remove</string>
+    <string name="start_date">Start Date</string>
     <string-array name="occupations_array">
         <item>Cook</item>
         <item>Maid</item>

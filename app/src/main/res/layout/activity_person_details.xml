@@ -78,6 +78,16 @@
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="@dimen/big_text_size" />
 
+                    <TextView
+                        android:id="@+id/start_day_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/dummy_cycle"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="@dimen/subheading_text_size" />
+
                 </LinearLayout>
 
                 <LinearLayout

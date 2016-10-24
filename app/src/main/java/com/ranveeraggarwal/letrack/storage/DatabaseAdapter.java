@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.addDays;
+import static com.ranveeraggarwal.letrack.utilities.Utilities.addMonths;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
 
 public class DatabaseAdapter {
@@ -130,7 +132,8 @@ public class DatabaseAdapter {
     }
 
     public List<Leave> getLeavesInRange(long startDate, long endDate, long pid) {
-
+        startDate = addDays(startDate, -1);
+        endDate = addDays(endDate, -2);
         SQLiteDatabase db = helper.getWritableDatabase();
         List<Leave> allDates = new ArrayList<>();
         try {

@@ -3,8 +3,10 @@ package com.ranveeraggarwal.letrack.utilities;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class Utilities {
 
@@ -30,6 +32,13 @@ public class Utilities {
         cal.clear(Calendar.AM_PM);
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.add(Calendar.MONTH, offset);
+        return cal.getTimeInMillis();
+    }
+
+    public static long addMonths(long currentDate, int numMonths) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(currentDate);
+        cal.add(Calendar.MONTH, numMonths);
         return cal.getTimeInMillis();
     }
 
@@ -82,5 +91,16 @@ public class Utilities {
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
         }
+    }
+
+    public static long addDays (long currentDay,  int numDays) {
+        return currentDay + numDays*86400000;
+    }
+
+    public static int getMonth(long day) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(day);
+        Date curr = cal.getTime();
+        return curr.getMonth() + 1;
     }
 }

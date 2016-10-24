@@ -7,9 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ranveeraggarwal.letrack.R;
@@ -31,11 +34,13 @@ public class EditPersonActivity extends AppCompatActivity {
     Button submitButton;
     RadioGroup frequencyFieldGroup;
     RadioButton frequencyField;
+    Spinner startDateField;
 
     String selectedName;
     String selectedOccupation;
     String selectedSalary;
     String selectedFrequency;
+    String selectedStartDate;
 
     DatabaseAdapter databaseAdapter;
 
@@ -84,6 +89,24 @@ public class EditPersonActivity extends AppCompatActivity {
         salaryField = (TextView) findViewById(R.id.salary_field);
         salaryField.setText(String.format(Locale.ENGLISH, "%d", person.getSalary()));
 
+        startDateField = (Spinner) findViewById(R.id.start_date_field);
+        ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter.createFromResource(this,
+                R.array.date_array, android.R.layout.simple_spinner_item);
+        dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        startDateField.setAdapter(dateAdapter);
+        startDateField.setSelection(person.getStartDate()-1);
+        selectedStartDate = startDateField.getSelectedItem().toString();
+        startDateField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedStartDate = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         submitButton = (Button) findViewById(R.id.submit_button);
         submitButton.setText(R.string.confirm);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +133,7 @@ public class EditPersonActivity extends AppCompatActivity {
                     person.setOccupation(selectedOccupation);
                     person.setSalary(Integer.parseInt(selectedSalary));
                     person.setFrequency(Integer.parseInt(selectedFrequency));
+                    person.setStartDate(Integer.parseInt(selectedStartDate));
 
                     int count = databaseAdapter.updatePerson(person);
                     if (count < 0) shortToastMaker(view.getContext(), "Operation unsuccessful");
@@ -178,6 +202,7 @@ public class EditPersonActivity extends AppCompatActivity {
                 person.setOccupation(selectedOccupation);
                 person.setSalary(Integer.parseInt(selectedSalary));
                 person.setFrequency(Integer.parseInt(selectedFrequency));
+                person.setStartDate(Integer.parseInt(selectedStartDate));
 
                 int count = databaseAdapter.updatePerson(person);
                 if (count < 0) shortToastMaker(this, "Operation unsuccessful");
