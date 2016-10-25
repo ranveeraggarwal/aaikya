@@ -14,5 +14,8 @@
         <Preference android:title="About"
             android:key="About"
             android:summary="Know more about the application."/>
+        <Preference android:title="Credits"
+            android:key="Credits"
+            android:summary="It takes several people to build something awesome."/>
     </PreferenceCategory>
 </PreferenceScreen>

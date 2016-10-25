@@ -22,6 +22,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     Preference clearData;
     Preference contactUs;
     Preference about;
+    Preference credits;
 
     DatabaseAdapter databaseAdapter;
 
@@ -46,6 +47,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         clearData = findPreference("DatabaseRefresh");
         contactUs = findPreference("ContactUs");
         about = findPreference("About");
+        credits = findPreference("Credits");
 
         clearData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -76,6 +78,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return false;
             }
         });
+
+        credits.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                creditsDialog();
+                return false;
+            }
+        });
     }
 
     private void aboutDialog() {
@@ -84,6 +94,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         builder.setMessage("This app was built as an 'Android Hello World' experiment by me, with the " +
                 "help of some of my friends. You can freely use this app for eternity, it'll never " +
                 "pivot to a paid app. Promise :)\n - Ranveer Aggarwal");
+        builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void creditsDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Credits");
+        builder.setMessage("APIs: Folks at Google\n" +
+                "Icons: materialdesignicons.com\n" +
+                "Calendar: SundeepK - CompactCalendarView\n" +
+                "Intro Screen: PaoloRotolo - AppIntro\n" +
+                "Special thanks: Bijoy Singh");
         builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
