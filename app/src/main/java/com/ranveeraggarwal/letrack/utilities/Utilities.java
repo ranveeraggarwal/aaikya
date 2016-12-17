@@ -53,6 +53,9 @@ public class Utilities {
     }
 
     public static String getMonthName(int monthNumber) {
+        while (monthNumber > 12) {
+            monthNumber -= 12;
+        }
         switch (monthNumber) {
             case 1:
                 return "January";
