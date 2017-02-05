@@ -21,7 +21,6 @@
         android:fillViewport="true">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -41,12 +40,26 @@
                     android:text="@string/name_field_desc"
                     android:textColor="@color/colorTextPrimary" />
 
-                <EditText
-                    android:id="@+id/name_field"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:inputType="textPersonName" />
+                    android:layout_weight="4">
+
+                    <EditText
+                        android:id="@+id/name_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName" />
+
+                    <TextView
+                        android:id="@+id/choose_from_contacts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/name_field"
+                        android:text="Choose from Contacts"
+                        android:visibility="visible"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -168,6 +181,8 @@
                     android:id="@+id/start_date_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:entries="@array/date_array"
+                    android:spinnerMode="dropdown"
                     android:layout_weight="4" />
             </LinearLayout>
 

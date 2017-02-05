@@ -1,9 +1,18 @@
 package com.ranveeraggarwal.letrack.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,18 +23,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.support.v7.widget.AppCompatSpinner;
 import android.widget.TextView;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import com.ranveeraggarwal.letrack.R;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
 import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
 
-public class AddPersonActivity extends AppCompatActivity {
+public class AddPersonActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     Toolbar toolbar;
     TextView nameField;
     TextView occupationField;
     TextView salaryField;
+    TextView chooseFromContacts;
     Button submitButton;
     RadioGroup frequencyFieldGroup;
     RadioButton frequencyField;
@@ -37,23 +48,47 @@ public class AddPersonActivity extends AppCompatActivity {
     String selectedFrequency;
     String selectedStartDate;
 
+    int REQUEST_CONTACTS = 1;
+    String TAG = "AddPersonActivity";
+    boolean hasContactPermission = false;
+
     DatabaseAdapter databaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_person);
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_CONTACTS}, REQUEST_CONTACTS);
+        } else {
+            hasContactPermission = true;
+        }
 
         databaseAdapter = new DatabaseAdapter(this);
 
         toolbar = (Toolbar) findViewById(R.id.add_app_bar);
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
-        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add Person");
 
         nameField = (TextView) findViewById(R.id.name_field);
+
+        chooseFromContacts = (TextView) findViewById(R.id.choose_from_contacts);
+        chooseFromContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNameOnClickListener();
+            }
+        });
+
+        if (hasContactPermission) {
+            chooseFromContacts.setVisibility(View.VISIBLE);
+        } else {
+            chooseFromContacts.setVisibility(View.GONE);
+        }
 
         occupationField = (TextView) findViewById(R.id.occupation_field);
 
@@ -83,30 +118,7 @@ public class AddPersonActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedName = nameField.getText().toString();
-
-                selectedOccupation = occupationField.getText().toString();
-
-                int checkedRadioButtonId = frequencyFieldGroup.getCheckedRadioButtonId();
-                frequencyField = (RadioButton) frequencyFieldGroup.findViewById(checkedRadioButtonId);
-                selectedFrequency = frequencyField.getText().toString();
-
-                selectedSalary = salaryField.getText().toString();
-
-                if (selectedName.equals("")) {
-                    shortToastMaker(view.getContext(), "Name cannot be empty!");
-                } else if (selectedOccupation.equals("")) {
-                    shortToastMaker(view.getContext(), "Occupation cannot be empty!");
-                } else if (selectedSalary.equals("")) {
-                    shortToastMaker(view.getContext(), "Salary cannot be empty!");
-                } else {
-                    long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), Integer.parseInt(selectedSalary));
-                    if (id < 0) shortToastMaker(view.getContext(), "Operation unsuccessful");
-                    else shortToastMaker(view.getContext(), "Person added successfully");
-                    Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                submitButtonOnClickListener();
             }
         });
     }
@@ -143,32 +155,93 @@ public class AddPersonActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (menuItem.getItemId() == R.id.action_add_person) {
-            selectedName = nameField.getText().toString();
-
-            selectedOccupation = occupationField.getText().toString();
-
-            int checkedRadioButtonId = frequencyFieldGroup.getCheckedRadioButtonId();
-            frequencyField = (RadioButton) frequencyFieldGroup.findViewById(checkedRadioButtonId);
-            selectedFrequency = frequencyField.getText().toString();
-
-            selectedSalary = salaryField.getText().toString();
-
-            if (selectedName.equals("")) {
-                shortToastMaker(this, "Name cannot be empty!");
-            } else if (selectedOccupation.equals("")) {
-                shortToastMaker(this, "Occupation cannot be empty!");
-            } else if (selectedSalary.equals("")) {
-                shortToastMaker(this, "Salary cannot be empty!");
-            } else {
-                long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency), Integer.parseInt(selectedStartDate), Integer.parseInt(selectedSalary));
-                if (id < 0) shortToastMaker(this, "Operation unsuccessful");
-                else shortToastMaker(this, "Person added successfully");
-                Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+            submitButtonOnClickListener();
         }
 
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CONTACTS) {
+            hasContactPermission = grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_DENIED;
+        }
+        updateContactButton();
+    }
+
+    @Override
+    public void onResume() {
+        updateContactButton();
+        super.onResume();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == REQUEST_CONTACTS) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+                Uri uri = data.getData();
+                String[] projection = { Phone.DISPLAY_NAME };
+
+                try (Cursor cursor = getContentResolver().query(uri, projection,
+                        null, null, null)) {
+                    if (cursor == null || cursor.getCount() <= 0) {
+                        Log.e(TAG, "Null cursor found. Weird! Probably no contact was picked");
+                        return;
+                    }
+                    cursor.moveToFirst();
+
+                    int nameColumnIndex = cursor.getColumnIndex(Phone.DISPLAY_NAME);
+                    String name = cursor.getString(nameColumnIndex);
+                    nameField.setText(name);
+                }
+            }
+        }
+    }
+
+    private void addNameOnClickListener() {
+        if (!hasContactPermission) return;
+
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(intent, REQUEST_CONTACTS);
+
+    }
+
+    private void submitButtonOnClickListener() {
+        selectedName = nameField.getText().toString();
+
+        selectedOccupation = occupationField.getText().toString();
+
+        int checkedRadioButtonId = frequencyFieldGroup.getCheckedRadioButtonId();
+        frequencyField = (RadioButton) frequencyFieldGroup.findViewById(checkedRadioButtonId);
+        selectedFrequency = frequencyField.getText().toString();
+
+        selectedSalary = salaryField.getText().toString();
+
+        if (selectedName.equals("")) {
+            shortToastMaker(this, "Name cannot be empty!");
+        } else if (selectedOccupation.equals("")) {
+            shortToastMaker(this, "Occupation cannot be empty!");
+        } else if (selectedSalary.equals("")) {
+            shortToastMaker(this, "Salary cannot be empty!");
+        } else {
+            long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency),
+                    Integer.parseInt(selectedStartDate), Integer.parseInt(selectedSalary));
+            if (id < 0) shortToastMaker(this, "Operation unsuccessful");
+            else shortToastMaker(this, "Person added successfully");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    private void updateContactButton() {
+        if (hasContactPermission) {
+            chooseFromContacts.setVisibility(View.VISIBLE);
+        } else {
+            chooseFromContacts.setVisibility(View.GONE);
+        }
     }
 }
