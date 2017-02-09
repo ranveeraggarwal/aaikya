@@ -59,12 +59,6 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_person);
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_CONTACTS}, REQUEST_CONTACTS);
-        } else {
-            hasContactPermission = true;
-        }
 
         databaseAdapter = new DatabaseAdapter(this);
 
@@ -83,12 +77,6 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
                 addNameOnClickListener();
             }
         });
-
-        if (hasContactPermission) {
-            chooseFromContacts.setVisibility(View.VISIBLE);
-        } else {
-            chooseFromContacts.setVisibility(View.GONE);
-        }
 
         occupationField = (TextView) findViewById(R.id.occupation_field);
 
@@ -166,12 +154,10 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
         if (requestCode == REQUEST_CONTACTS) {
             hasContactPermission = grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_DENIED;
         }
-        updateContactButton();
     }
 
     @Override
     public void onResume() {
-        updateContactButton();
         super.onResume();
     }
 
@@ -202,6 +188,13 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
     }
 
     private void addNameOnClickListener() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_CONTACTS}, REQUEST_CONTACTS);
+        } else {
+            hasContactPermission = true;
+        }
+
         if (!hasContactPermission) return;
 
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -234,14 +227,6 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
-        }
-    }
-
-    private void updateContactButton() {
-        if (hasContactPermission) {
-            chooseFromContacts.setVisibility(View.VISIBLE);
-        } else {
-            chooseFromContacts.setVisibility(View.GONE);
         }
     }
 }
