@@ -56,7 +56,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/name_field"
-                        android:text="Choose from Contacts"
+                        android:text="@string/pick_from_contact"
                         android:visibility="visible"/>
 
                 </RelativeLayout>
