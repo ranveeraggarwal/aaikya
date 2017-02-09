@@ -152,7 +152,8 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CONTACTS) {
-            hasContactPermission = grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_DENIED;
+            hasContactPermission = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+            addNameOnClickListener();
         }
     }
 
