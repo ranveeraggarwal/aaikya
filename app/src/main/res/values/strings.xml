@@ -37,6 +37,7 @@
     <string name="add">ADD</string>
     <string name="remove">Remove</string>
     <string name="start_date">Start Date</string>
+    <string name="pick_from_contact">Choose from Contacts</string>
     <string-array name="occupations_array">
         <item>Cook</item>
         <item>Maid</item>
