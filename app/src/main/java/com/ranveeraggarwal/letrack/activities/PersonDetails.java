@@ -94,12 +94,16 @@ public class PersonDetails extends AppCompatActivity {
         leavesDayValue = databaseAdapter.getLeavesForDate(currentDay, person.getId()).size();
         leavesMonthValue = databaseAdapter.getLeavesInRange(currentMonth, addMonths(currentMonth, 1), person.getId()).size();
 
+        Date dateToday = new Date();
+
         //Toolbar
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(person.getName());
+
+        monthText.setText(getMonthName(dateToday.getMonth() + 1) + ", " + (dateToday.getYear() + 1900));
 
         // Setting UI elements to current value
         occupationText.setText(person.getOccupation());
