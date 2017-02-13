@@ -24,6 +24,8 @@ import static android.view.View.VISIBLE;
 public class MainActivity extends AppCompatActivity {
 
     private PersonAdapter personAdapter;
+    private DatabaseAdapter databaseAdapter;
+    private RecyclerView personList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
         t.start();
 
-        DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
+        databaseAdapter = new DatabaseAdapter(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.details_app_bar);
         setSupportActionBar(toolbar);
@@ -61,13 +63,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddPersonActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
         ImageView placeholderImage = (ImageView) findViewById(R.id.placeholder_image);
 
-        RecyclerView personList = (RecyclerView) findViewById(R.id.person_list);
+        personList = (RecyclerView) findViewById(R.id.person_list);
         personAdapter = new PersonAdapter(this, databaseAdapter.getPersonList());
         personList.setAdapter(personAdapter);
         personList.setLayoutManager(new LinearLayoutManager(this));
@@ -86,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        personAdapter.notifyDataSetChanged();
+        databaseAdapter = new DatabaseAdapter(this);
+        personAdapter = new PersonAdapter(this, databaseAdapter.getPersonList());
+        personList.setAdapter(personAdapter);
     }
 
     @Override
@@ -101,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         if (menuItem.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-            finish();
             return true;
         }
 

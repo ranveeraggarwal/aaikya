@@ -110,7 +110,6 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonViewHolder> {
                 Intent intent = new Intent(context, PersonDetails.class);
                 intent.putExtra("currentPerson", currentPerson);
                 context.startActivity(intent);
-                ((Activity) context).finish();
             }
         });
     }

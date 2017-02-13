@@ -166,15 +166,6 @@ public class EditPersonActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(this, PersonDetails.class);
-        intent.putExtra("currentPerson", person);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
