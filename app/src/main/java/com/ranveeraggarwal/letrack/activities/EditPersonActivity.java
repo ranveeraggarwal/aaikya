@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -31,6 +32,7 @@ public class EditPersonActivity extends AppCompatActivity {
     TextView nameField;
     TextView occupationField;
     TextView salaryField;
+    ImageView chooseFromContacts;
     Button submitButton;
     RadioGroup frequencyFieldGroup;
     RadioButton frequencyField;
@@ -53,6 +55,9 @@ public class EditPersonActivity extends AppCompatActivity {
         person = (Person) intent.getSerializableExtra("currentPerson");
 
         databaseAdapter = new DatabaseAdapter(this);
+
+        chooseFromContacts = (ImageView) findViewById(R.id.choose_from_contacts);
+        chooseFromContacts.setVisibility(View.GONE);
 
         toolbar = (Toolbar) findViewById(R.id.add_app_bar);
         setSupportActionBar(toolbar);

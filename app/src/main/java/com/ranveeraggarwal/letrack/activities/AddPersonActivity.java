@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.support.v7.widget.AppCompatSpinner;
@@ -36,7 +37,7 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
     TextView nameField;
     TextView occupationField;
     TextView salaryField;
-    TextView chooseFromContacts;
+    ImageView chooseFromContacts;
     Button submitButton;
     RadioGroup frequencyFieldGroup;
     RadioButton frequencyField;
@@ -70,7 +71,7 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
 
         nameField = (TextView) findViewById(R.id.name_field);
 
-        chooseFromContacts = (TextView) findViewById(R.id.choose_from_contacts);
+        chooseFromContacts = (ImageView) findViewById(R.id.choose_from_contacts);
         chooseFromContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
