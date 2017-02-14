@@ -300,9 +300,7 @@ public class PersonDetails extends AppCompatActivity {
             finish();
             return true;
         } else if (menuItem.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            onBackPressed();
         } else if (menuItem.getItemId() == R.id.action_edit_person) {
             Intent intent = new Intent(this, EditPersonActivity.class);
             intent.putExtra("currentPerson", person);

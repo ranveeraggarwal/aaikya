@@ -125,14 +125,6 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
         return true;
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-//        finish();
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.action_settings) {
@@ -226,7 +218,9 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
                     Integer.parseInt(selectedStartDate), Integer.parseInt(selectedSalary));
             if (id < 0) shortToastMaker(this, "Operation unsuccessful");
             else shortToastMaker(this, "Person added successfully");
-            onBackPressed();
+            Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
