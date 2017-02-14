@@ -15,7 +15,6 @@ import java.util.List;
 
 import static com.ranveeraggarwal.letrack.utilities.RepetitiveUI.shortToastMaker;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.addDays;
-import static com.ranveeraggarwal.letrack.utilities.Utilities.addMonths;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
 
 public class DatabaseAdapter {
@@ -28,13 +27,12 @@ public class DatabaseAdapter {
         helper = new DatabaseHelper(context);
     }
 
-    private ContentValues getPersonContentValues(String name, String occupation, int frequency, int startDate, int salary) {
+    private ContentValues getPersonContentValues(String name, String description, int frequency, int startDate) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.P_NAME, name);
-        contentValues.put(DatabaseHelper.P_OCCUPATION, occupation);
+        contentValues.put(DatabaseHelper.P_DESCRIPTION, description);
         contentValues.put(DatabaseHelper.P_FREQUENCY, frequency);
         contentValues.put(DatabaseHelper.P_STARTDATE, startDate);
-        contentValues.put(DatabaseHelper.P_SALARY, salary);
 
         return contentValues;
     }
@@ -48,10 +46,10 @@ public class DatabaseAdapter {
         return contentValues;
     }
 
-    public long insertPerson(String name, String occupation, int frequency, int startDate, int salary) {
+    public long insertPerson(String name, String description, int frequency, int startDate) {
         try {
             SQLiteDatabase db = helper.getWritableDatabase();
-            ContentValues contentValues = getPersonContentValues(name, occupation, frequency, startDate, salary);
+            ContentValues contentValues = getPersonContentValues(name, description, frequency, startDate);
             long id = db.insert(DatabaseHelper.PERSON_TABLE, null, contentValues);
             db.close();
             return id;
@@ -64,7 +62,7 @@ public class DatabaseAdapter {
 
     public List<Person> getPersonList() {
         SQLiteDatabase db = helper.getWritableDatabase();
-        String[] columns = {DatabaseHelper.P_ID, DatabaseHelper.P_NAME, DatabaseHelper.P_OCCUPATION, DatabaseHelper.P_FREQUENCY, DatabaseHelper.P_STARTDATE, DatabaseHelper.P_SALARY};
+        String[] columns = {DatabaseHelper.P_ID, DatabaseHelper.P_NAME, DatabaseHelper.P_DESCRIPTION, DatabaseHelper.P_FREQUENCY, DatabaseHelper.P_STARTDATE};
         List<Person> allPeople = new ArrayList<>();
         try {
             Cursor cursor = db.query(DatabaseHelper.PERSON_TABLE, columns, null, null, null, null, null);
@@ -74,10 +72,9 @@ public class DatabaseAdapter {
                         cursor.getLong(cursor.getColumnIndex(DatabaseHelper.P_ID)),
                         cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_NAME)),
                         Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_FREQUENCY))),
-                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_OCCUPATION)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_DESCRIPTION)),
                         0,
-                        Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_STARTDATE))),
-                        Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_SALARY)))
+                        Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.P_STARTDATE)))
                 );
                 currentPerson.setLeaves(getLeavesForDate(getCurrentDate(), currentPerson.getId()).size());
                 allPeople.add(currentPerson);
@@ -94,8 +91,8 @@ public class DatabaseAdapter {
     public int updatePerson(Person updatedPerson) {
         try {
             SQLiteDatabase db = helper.getWritableDatabase();
-            ContentValues contentValues = getPersonContentValues(updatedPerson.getName(), updatedPerson.getOccupation(),
-                    updatedPerson.getFrequency(), updatedPerson.getStartDate(), updatedPerson.getSalary());
+            ContentValues contentValues = getPersonContentValues(updatedPerson.getName(), updatedPerson.getDescription(),
+                    updatedPerson.getFrequency(), updatedPerson.getStartDate());
             String[] whereArgs = {Long.toString(updatedPerson.getId())};
             int count = db.update(DatabaseHelper.PERSON_TABLE, contentValues, DatabaseHelper.P_ID + "=? ", whereArgs);
             db.close();
@@ -225,7 +222,7 @@ public class DatabaseAdapter {
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
-        private static final int DATABASE_VERSION = 1;
+        private static final int DATABASE_VERSION = 3;
 
         private static final String DATABASE = "personDatabase";
 
@@ -234,10 +231,9 @@ public class DatabaseAdapter {
 
         private static final String P_ID = "_id";
         private static final String P_NAME = "name";
-        private static final String P_OCCUPATION = "occupation";
+        private static final String P_DESCRIPTION = "description";
         private static final String P_FREQUENCY = "frequency";
         private static final String P_STARTDATE = "start_date";
-        private static final String P_SALARY = "salary";
 
         private static final String L_ID = "_id";
         private static final String L_PID = "person_id";
@@ -254,10 +250,9 @@ public class DatabaseAdapter {
                     "CREATE TABLE " + PERSON_TABLE + "("
                             + P_ID + " INTEGER PRIMARY KEY,"
                             + P_NAME + " TEXT,"
-                            + P_OCCUPATION + " TEXT,"
+                            + P_DESCRIPTION + " TEXT,"
                             + P_FREQUENCY + " INTEGER,"
-                            + P_STARTDATE + " INTEGER,"
-                            + P_SALARY + " INTEGER"
+                            + P_STARTDATE + " INTEGER"
                             + ");";
             db.execSQL(CREATE_PERSON_TABLE);
 

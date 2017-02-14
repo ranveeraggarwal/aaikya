@@ -49,10 +49,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/occupation"
+                        android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/dummy_occupation"
+                        android:text="@string/dummy_description"
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="@dimen/subheading_text_size" />
                     <TextView

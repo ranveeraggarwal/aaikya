@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.ranveeraggarwal.letrack.models.Leave;
 import com.ranveeraggarwal.letrack.models.Person;
 import com.ranveeraggarwal.letrack.storage.DatabaseAdapter;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +26,6 @@ import static com.ranveeraggarwal.letrack.utilities.Utilities.addDays;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.addMonths;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentDate;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentMonth;
-import static com.ranveeraggarwal.letrack.utilities.Utilities.getCurrentMonthOffset;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getMonth;
 import static com.ranveeraggarwal.letrack.utilities.Utilities.getMonthName;
 
@@ -39,7 +36,7 @@ public class PersonDetails extends AppCompatActivity {
     Toolbar toolbar;
 
     TextView monthText;
-    TextView occupationText;
+    TextView descriptionText;
     TextView frequencyText;
     TextView startDateText;
 
@@ -71,7 +68,7 @@ public class PersonDetails extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.details_app_bar);
 
         monthText = (TextView) findViewById(R.id.month_text);
-        occupationText = (TextView) findViewById(R.id.occupation_text);
+        descriptionText = (TextView) findViewById(R.id.description_text);
         frequencyText = (TextView) findViewById(R.id.frequency_text);
         startDateText = (TextView) findViewById(R.id.start_day_text);
         leavesDayText = (TextView) findViewById(R.id.leaves_day_text);
@@ -106,7 +103,7 @@ public class PersonDetails extends AppCompatActivity {
         monthText.setText(getMonthName(dateToday.getMonth() + 1) + ", " + (dateToday.getYear() + 1900));
 
         // Setting UI elements to current value
-        occupationText.setText(person.getOccupation());
+        descriptionText.setText(person.getDescription());
 
         switch (person.getStartDate()){
             case 1:

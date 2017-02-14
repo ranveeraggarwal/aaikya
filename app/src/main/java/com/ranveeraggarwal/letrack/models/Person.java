@@ -8,47 +8,26 @@ public class Person implements Serializable {
     private int frequency;
     private int leaves;
     private int startDate;
-    private String occupation;
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    private int salary;
+    private String description;
 
     public Person() {
     }
 
-    public Person(String name, int frequency, String occupation, int startDate) {
+    public Person(String name, int frequency, String description, int startDate) {
         this.setName(name);
         this.setFrequency(frequency);
-        this.setOccupation(occupation);
+        this.setDescription(description);
         this.setLeaves(0);
         this.setStartDate(startDate);
-        this.setSalary(0);
     }
 
-    public Person(String name, int frequency, String occupation, int startDate, int salary) {
-        this.setName(name);
-        this.setFrequency(frequency);
-        this.setOccupation(occupation);
-        this.setLeaves(0);
-        this.setStartDate(startDate);
-        this.setSalary(salary);
-    }
-
-    public Person(long id, String name, int frequency, String occupation, int leaves, int startDate, int salary) {
+    public Person(long id, String name, int frequency, String description, int leaves, int startDate) {
         this.setId(id);
         this.setName(name);
         this.setFrequency(frequency);
-        this.setOccupation(occupation);
+        this.setDescription(description);
         this.setLeaves(leaves);
         this.setStartDate(startDate);
-        this.setSalary(salary);
     }
 
     public String getName() {
@@ -75,12 +54,12 @@ public class Person implements Serializable {
         this.leaves = leaves;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public String getDescription() {
+        return description;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getStartDate() {

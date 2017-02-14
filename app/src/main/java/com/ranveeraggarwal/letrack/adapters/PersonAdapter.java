@@ -1,6 +1,5 @@
 package com.ranveeraggarwal.letrack.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +48,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonViewHolder> {
         final Person currentPerson = data.get(position);
         currentPerson.setLeaves(databaseAdapter.getLeavesForDate(getCurrentDate(), currentPerson.getId()).size());
         holder.setName(currentPerson.getName());
-        holder.setOccupation(currentPerson.getOccupation());
+        holder.setDescription(currentPerson.getDescription());
         holder.setFrequency(currentPerson.getFrequency());
         holder.setLeaves(currentPerson.getLeaves());
         if (currentPerson.getLeaves() >= currentPerson.getFrequency()) {

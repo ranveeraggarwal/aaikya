@@ -30,8 +30,7 @@ public class EditPersonActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView nameField;
-    TextView occupationField;
-    TextView salaryField;
+    TextView descriptionField;
     ImageView chooseFromContacts;
     Button submitButton;
     RadioGroup frequencyFieldGroup;
@@ -39,8 +38,7 @@ public class EditPersonActivity extends AppCompatActivity {
     Spinner startDateField;
 
     String selectedName;
-    String selectedOccupation;
-    String selectedSalary;
+    String selectedDescription;
     String selectedFrequency;
     String selectedStartDate;
 
@@ -69,8 +67,8 @@ public class EditPersonActivity extends AppCompatActivity {
         nameField = (TextView) findViewById(R.id.name_field);
         nameField.setText(person.getName());
 
-        occupationField = (TextView) findViewById(R.id.occupation_field);
-        occupationField.setText(person.getOccupation());
+        descriptionField = (TextView) findViewById(R.id.description_field);
+        descriptionField.setText(person.getDescription());
 
         frequencyFieldGroup = (RadioGroup) findViewById(R.id.frequency_field);
         switch (person.getFrequency()) {
@@ -90,9 +88,6 @@ public class EditPersonActivity extends AppCompatActivity {
                 frequencyFieldGroup.check(R.id.frequency_field_1);
                 break;
         }
-
-        salaryField = (TextView) findViewById(R.id.salary_field);
-        salaryField.setText(String.format(Locale.ENGLISH, "%d", person.getSalary()));
 
         startDateField = (Spinner) findViewById(R.id.start_date_field);
         ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter.createFromResource(this,
@@ -119,24 +114,19 @@ public class EditPersonActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectedName = nameField.getText().toString();
 
-                selectedOccupation = occupationField.getText().toString();
+                selectedDescription = descriptionField.getText().toString();
 
                 int checkedRadioButtonId = frequencyFieldGroup.getCheckedRadioButtonId();
                 frequencyField = (RadioButton) frequencyFieldGroup.findViewById(checkedRadioButtonId);
                 selectedFrequency = frequencyField.getText().toString();
 
-                selectedSalary = salaryField.getText().toString();
-
                 if (selectedName.equals("")) {
                     shortToastMaker(view.getContext(), "Name cannot be empty!");
-                } else if (selectedOccupation.equals("")) {
+                } else if (selectedDescription.equals("")) {
                     shortToastMaker(view.getContext(), "Occupation cannot be empty!");
-                } else if (selectedSalary.equals("")) {
-                    shortToastMaker(view.getContext(), "Salary cannot be empty!");
                 } else {
                     person.setName(selectedName);
-                    person.setOccupation(selectedOccupation);
-                    person.setSalary(Integer.parseInt(selectedSalary));
+                    person.setDescription(selectedDescription);
                     person.setFrequency(Integer.parseInt(selectedFrequency));
                     person.setStartDate(Integer.parseInt(selectedStartDate));
 
@@ -179,24 +169,19 @@ public class EditPersonActivity extends AppCompatActivity {
         } else if (menuItem.getItemId() == R.id.action_add_person) {
             selectedName = nameField.getText().toString();
 
-            selectedOccupation = occupationField.getText().toString();
+            selectedDescription = descriptionField.getText().toString();
 
             int checkedRadioButtonId = frequencyFieldGroup.getCheckedRadioButtonId();
             frequencyField = (RadioButton) frequencyFieldGroup.findViewById(checkedRadioButtonId);
             selectedFrequency = frequencyField.getText().toString();
 
-            selectedSalary = salaryField.getText().toString();
-
             if (selectedName.equals("")) {
                 shortToastMaker(this, "Name cannot be empty!");
-            } else if (selectedOccupation.equals("")) {
-                shortToastMaker(this, "Occupation cannot be empty!");
-            } else if (selectedSalary.equals("")) {
-                shortToastMaker(this, "Salary cannot be empty!");
+            } else if (selectedDescription.equals("")) {
+                shortToastMaker(this, "Description cannot be empty!");
             } else {
                 person.setName(selectedName);
-                person.setOccupation(selectedOccupation);
-                person.setSalary(Integer.parseInt(selectedSalary));
+                person.setDescription(selectedDescription);
                 person.setFrequency(Integer.parseInt(selectedFrequency));
                 person.setStartDate(Integer.parseInt(selectedStartDate));
 

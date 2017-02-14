@@ -74,39 +74,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="@string/occupation_field_desc"
+                    android:text="@string/description_field_desc"
                     android:textColor="@color/colorTextPrimary" />
 
                 <EditText
-                    android:id="@+id/occupation_field"
+                    android:id="@+id/description_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:inputType="text"
-                    android:hint="@string/occupation_field_example"/>
+                    android:hint="@string/description_field_example"/>
             </LinearLayout>
-
-            <LinearLayout
-                style="@style/card_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:labelFor="@+id/salary_field"
-                    android:text="@string/salary_field_desc"
-                    android:textColor="@color/colorTextPrimary" />
-
-                <EditText
-                    android:id="@+id/salary_field"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:inputType="number" />
-            </LinearLayout>
-
 
             <LinearLayout
                 style="@style/card_style"

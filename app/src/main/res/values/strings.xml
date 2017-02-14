@@ -6,7 +6,7 @@
     <string name="dummy_text">Dummy Text</string>
     <string name="dummy_name">Dummy Name</string>
     <string name="dummy_frequency">Dummy Frequency</string>
-    <string name="dummy_occupation">Dummy Occupation</string>
+    <string name="dummy_description">Dummy Description</string>
     <string name="add_leave">Add Leave</string>
     <string name="cancel_leave">Remove Leave</string>
     <string name="add_person">Add Person</string>
@@ -21,7 +21,7 @@
 
     <!-- Add/Edit Person Activities -->
     <string name="name_field_desc">Name</string>
-    <string name="occupation_field_desc">Occupation</string>
+    <string name="description_field_desc">Description</string>
     <string name="salary_field_desc">Salary</string>
     <string name="frequency_field_desc">Frequency</string>
     <string name="one">1</string>
@@ -32,7 +32,7 @@
     <string name="today">Today</string>
     <string name="on_selected_day">On Selected day</string>
     <string name="confirm">Confirm</string>
-    <string name="occupation_field_example">eg Cook, House Help etc.</string>
+    <string name="description_field_example">Description ...</string>
     <string name="placeholder">Placeholder</string>
     <string name="add">ADD</string>
     <string name="remove">Remove</string>

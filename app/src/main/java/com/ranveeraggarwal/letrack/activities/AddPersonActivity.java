@@ -35,8 +35,7 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
 
     Toolbar toolbar;
     TextView nameField;
-    TextView occupationField;
-    TextView salaryField;
+    TextView descriptionField;
     ImageView chooseFromContacts;
     Button submitButton;
     RadioGroup frequencyFieldGroup;
@@ -44,8 +43,7 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
     AppCompatSpinner startDateField;
 
     String selectedName;
-    String selectedOccupation;
-    String selectedSalary;
+    String selectedDescription;
     String selectedFrequency;
     String selectedStartDate;
 
@@ -79,11 +77,9 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
             }
         });
 
-        occupationField = (TextView) findViewById(R.id.occupation_field);
+        descriptionField = (TextView) findViewById(R.id.description_field);
 
         frequencyFieldGroup = (RadioGroup) findViewById(R.id.frequency_field);
-
-        salaryField = (TextView) findViewById(R.id.salary_field);
 
         startDateField = (AppCompatSpinner) findViewById(R.id.start_date_field);
         ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter.createFromResource(this,
@@ -199,23 +195,19 @@ public class AddPersonActivity extends AppCompatActivity implements ActivityComp
     private void submitButtonOnClickListener() {
         selectedName = nameField.getText().toString();
 
-        selectedOccupation = occupationField.getText().toString();
+        selectedDescription = descriptionField.getText().toString();
 
         int checkedRadioButtonId = frequencyFieldGroup.getCheckedRadioButtonId();
         frequencyField = (RadioButton) frequencyFieldGroup.findViewById(checkedRadioButtonId);
         selectedFrequency = frequencyField.getText().toString();
 
-        selectedSalary = salaryField.getText().toString();
-
         if (selectedName.equals("")) {
             shortToastMaker(this, "Name cannot be empty!");
-        } else if (selectedOccupation.equals("")) {
-            shortToastMaker(this, "Occupation cannot be empty!");
-        } else if (selectedSalary.equals("")) {
-            shortToastMaker(this, "Salary cannot be empty!");
+        } else if (selectedDescription.equals("")) {
+            shortToastMaker(this, "Description cannot be empty!");
         } else {
-            long id = databaseAdapter.insertPerson(selectedName, selectedOccupation, Integer.parseInt(selectedFrequency),
-                    Integer.parseInt(selectedStartDate), Integer.parseInt(selectedSalary));
+            long id = databaseAdapter.insertPerson(selectedName, selectedDescription, Integer.parseInt(selectedFrequency),
+                    Integer.parseInt(selectedStartDate));
             if (id < 0) shortToastMaker(this, "Operation unsuccessful");
             else shortToastMaker(this, "Person added successfully");
             Intent intent = new Intent(AddPersonActivity.this, MainActivity.class);

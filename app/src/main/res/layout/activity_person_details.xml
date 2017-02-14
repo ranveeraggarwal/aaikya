@@ -40,10 +40,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/occupation_text"
+                        android:id="@+id/description_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/dummy_occupation"
+                        android:text="@string/dummy_description"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="@dimen/big_text_size" />
 

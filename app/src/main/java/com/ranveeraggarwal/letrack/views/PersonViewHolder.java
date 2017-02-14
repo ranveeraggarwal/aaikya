@@ -10,7 +10,7 @@ import com.ranveeraggarwal.letrack.R;
 public class PersonViewHolder extends RecyclerView.ViewHolder {
 
     private TextView name;
-    private TextView occupation;
+    private TextView description;
     private TextView frequency;
     private TextView leaves;
 
@@ -22,7 +22,7 @@ public class PersonViewHolder extends RecyclerView.ViewHolder {
     public PersonViewHolder(View itemView) {
         super(itemView);
         name = (TextView) itemView.findViewById(R.id.name);
-        occupation = (TextView) itemView.findViewById(R.id.occupation);
+        description = (TextView) itemView.findViewById(R.id.description);
         frequency = (TextView) itemView.findViewById(R.id.frequency);
         leaves = (TextView) itemView.findViewById(R.id.leaves);
         addLeave = (Button) itemView.findViewById(R.id.add_leave_button);
@@ -38,12 +38,12 @@ public class PersonViewHolder extends RecyclerView.ViewHolder {
         this.name.setText(name);
     }
 
-    public TextView getOccupation() {
-        return occupation;
+    public TextView getDescription() {
+        return description;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation.setText(occupation);
+    public void setDescription(String description) {
+        this.description.setText(description);
     }
 
     public TextView getFrequency() {
