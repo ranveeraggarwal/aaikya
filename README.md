@@ -7,4 +7,4 @@ Presenting AaiKya.
 
 Track the leaves taken by your household help - using a simple intuitive interface. Use the calendar interface to actually see the number of vacations taken in a month. Prevent arguments about the correct salary at the end of the month.
 
-Play store link (alpha): https://play.google.com/store/apps/details?id=com.ranveeraggarwal.letrack
+Play store link: https://play.google.com/store/apps/details?id=com.ranveeraggarwal.letrack
